@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // В яку версію компілювати
+    "module": "NodeNext", // Модуль typescript
+    "moduleResolution": "NodeNext", // Як шукати файли
+    "outDir": "dist", // куди компілювати
+    "rootDir": ".",
+    "esModuleInterop": true, // Робить сумісність модулів
+    "forceConsistentCasingInFileNames": true, // Перевірка регістра
+    "strict": true, // Строгість TypeScript
+    "skipLibCheck": true, // Пропускає деякі провірки при компіляції в бібліотек
+    "allowSyntheticDefaultImports": true, // Дозволя імпортувати без default
+    "resolveJsonModule": true, // Імпортувати .json файли напряму
+    "allowImportingTsExtensions": false // Дозволяє імпортувати .ts/.js
+  },
+  "include": ["."]
+}
