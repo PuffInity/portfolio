@@ -4,10 +4,14 @@ import cors from "cors";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import hpp from "hpp";
+import session from 'express-session'
 import cookieParser from "cookie-parser";
+import {RedisStore} from "connect-redis";
 
 
 import {createAppLogger} from "../utils/logger/logger.js";
+import {sessionClient} from "../server/life-cycle/life-cycle.redis.js";
+import {redisInit} from "../server/life-cycle/life-cycle.redis.js";
 
 /**
  * @file security.config.ts
@@ -144,6 +148,49 @@ export function applySecurity(app: Application): void {
      */
     app.use(hpp());
     securityLogger.info('hpp Ввімкнутий')
+    /**
+     * @summary Конфігурація для сесій
+     * name - Це назва Cookie у якому зберігається індефікатор
+     * secret - Ключ для підпису cookie Щоб його не можна було підробити
+     * resave - Якщо true Express зберігатиме  сесію в сховищі навіть якщо вона не змінюувалась
+     * saveUninitialized - Якщо тру створює сесію навіть для анонімних користувачів
+     * cookie - Обʼєкт налаштувань для Cookie які зберігають session
+     * secure - Якщо true відправляє тільки через Https
+     * httpOnly - Забороняє Джава скрипту читати cookie в бразуері
+     * maxAge - Термін життя cookie після чого сесія зникне
+     * sameSite - Захист вд CSFR атак
+     */
+
+    console.log(sessionClient,'session')
+    app.use(session({
+        store: new RedisStore({
+            client: sessionClient,
+            prefix: 'sess:',
+            ttl: 3600
+        }),
+        name: 'sessionId',
+        secret: process.env.SESSION_SECRET || "IDon'tNowButIThinkIsTheBestOptionsIt'sThisTheLongTextForThisVeryStrangeSecret",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false,
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60,
+            sameSite: "lax",
+        }
+    }))
+    securityLogger.info('session Ввімкнутий', {
+        cookie: {
+            secure: isProd,
+            httpOnly: true,
+            maxAgeMs: 1000 * 60 * 60,
+            sameSite: 'strict',
+        }
+    })
+    if(isProd && !process.env.SESSION_SECRET) {
+        securityLogger.error('SESSION_SECRET Не установлений в ENV!')
+        process.exit(1)
+    }
 
 
 }
