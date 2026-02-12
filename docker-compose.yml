@@ -1,0 +1,133 @@
+services:
+  # ==================================================
+  # BACKEND — Node.js сервер (API)
+  # ==================================================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: portfolio-backend
+
+    # Мінімальні змінні прямо тут (не обовʼязково, але ок)
+    environment:
+      - DOCKER=true
+      - NODE_ENV=production
+      - PORT=3000
+
+    # Всі змінні для бекенду (PG_*, REDIS_*, SMTP_*, тощо)
+    env_file:
+      - ./backend/.env.docker
+
+    # localhost:3000 -> container:3000
+    ports:
+      - "3000:3000"
+
+    # Зберігаємо логи на хості
+    volumes:
+      - ./logs:/app/logs
+      - upload-images:/app/uploads
+
+    # Важливо: не просто "запусти раніше", а "дочекайся readiness"
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+
+    networks:
+      - appnet
+
+
+  # ==================================================
+  # FRONTEND — NGINX + HTML/CSS/JS
+  # ==================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: portfolio-frontend
+
+    # localhost:8080 -> nginx:80
+    ports:
+      - "8080:80"
+
+    volumes:
+      - upload-images:/usr/share/nginx/html/uploads
+
+    depends_on:
+      - backend
+
+    networks:
+      - appnet
+
+
+  # ==================================================
+  # REDIS — сесії, кеш, TTL
+  # ==================================================
+  redis:
+    image: redis:7-alpine
+    container_name: portfolio-redis
+
+    # Опціонально: якщо хочеш підʼєднуватись з хоста (redis-cli)
+    ports:
+      - "6379:6379"
+
+    # Дані Redis переживуть рестарт контейнера
+    volumes:
+      - redis-data:/data
+
+    # Healthcheck: контейнер вважається "healthy", коли Redis відповідає
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+    networks:
+      - appnet
+
+
+  # ==================================================
+  # POSTGRES — основна база даних
+  # ==================================================
+  postgres:
+    image: postgres:16-alpine
+    container_name: portfolio-postgres
+
+    # ВАЖЛИВО: Postgres-образ читає тільки POSTGRES_*
+    # Тому краще окремий env файл для postgres
+    env_file:
+      - ./backend/.env.postgres
+
+    # Дані БД переживуть рестарт контейнера
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+    # Healthcheck: контейнер "healthy", коли Postgres готовий приймати конекти
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+    networks:
+      - appnet
+
+
+# ==================================================
+# VOLUMES — постійні дані
+# ==================================================
+volumes:
+  redis-data:
+  postgres-data:
+  upload-images:
+
+
+# ==================================================
+# NETWORKS — спільна мережа
+# ==================================================
+networks:
+  appnet:
+    driver: bridge
