@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="uk" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Дебаг та оптимізація — Puffinity • Розробник</title>
+  <meta name="description" content="Дебаг та оптимізація: аудит, виправлення багів, прискорення, звіти. Приклади, FAQ, умови та контакти." />
+
+  <!-- Vendor styles -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="../css/styles.css" />
+  <!-- Page-specific styles -->
+  <link rel="stylesheet" href="../css/debug.css" />
+</head>
+<body id="top">
+
+<!-- Top Navigation -->
+<nav class="navbar navbar-expand-lg sticky-top navbar-back">
+  <a class="navbar-back-link" href="#" onclick="history.back(); return false;" aria-label="Назад">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Портфолио • Puffinity</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navMain"
+      aria-controls="navMain"
+      aria-expanded="false"
+      aria-label="Перемкнути навігацію"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navMain" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item"><a class="nav-link" href="#highlights">Огляд</a></li>
+        <li class="nav-item"><a class="nav-link" href="#process">Етапи</a></li>
+        <li class="nav-item"><a class="nav-link" href="#pricing-cta">Ціна</a></li>
+        <li class="nav-item"><a class="nav-link" href="#gallery">Галерея</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq-section">FAQ</a></li>
+        <li class="nav-item">
+          <a class="btn btn-sm btn-gradient ms-lg-2" href="#contact-terms">
+            <i class="bi bi-send me-1"></i>Зв’язатися
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero (dynamic content) -->
+<header class="hero">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <span id="hero-badge" class="badge badge-soft rounded-pill px-3 py-2 mb-3 hidden">
+          <i class="bi bi-bug me-1"></i>
+          <span data-bind="badge"></span>
+        </span>
+        <h1 id="hero-title" class="display-5 fw-bold mb-3"></h1>
+        <p id="hero-lead" class="lead text-muted-2 mb-4"></p>
+        <div id="hero-ctas" class="d-flex gap-3 hidden">
+          <a id="hero-cta1" href="#process" class="btn btn-lg btn-gradient">
+            <i class="bi bi-list-check me-2"></i>
+            <span data-bind="cta1Text"></span>
+          </a>
+          <a id="hero-cta2" href="#gallery" class="btn btn-lg btn-outline-secondary">
+            <i class="bi bi-speedometer2 me-2"></i>
+            <span data-bind="cta2Text"></span>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <div id="hero-image-wrap" class="glass p-2 rounded-4 shadow-sm hidden">
+          <div class="ratio ratio-16x9 rounded-4 overflow-hidden">
+            <img id="hero-image" src="" alt="Дебаг та оптимізація" style="object-fit:cover;" data-allow-external="1" loading="lazy" decoding="async">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HIGHLIGHTS -->
+<section id="highlights" class="py-5 hidden">
+  <div class="container">
+    <div class="row g-4">
+      <div id="hl-duration" class="col-md-4 hidden">
+        <div class="card-glass p-4 h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-hourglass-split fs-4 me-2"></i>
+            <h5 class="mb-0">Тривалість</h5>
+          </div>
+          <p class="mb-0 text-muted">
+            <span data-bind="duration"></span>
+          </p>
+        </div>
+      </div>
+      <div id="hl-price" class="col-md-4 hidden">
+        <div class="card-glass p-4 h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-cash-coin fs-4 me-2"></i>
+            <h5 class="mb-0">Ціна</h5>
+          </div>
+          <p class="mb-0 text-muted">
+            <span data-bind="price"></span>
+          </p>
+        </div>
+      </div>
+      <div id="hl-executor" class="col-md-4 hidden">
+        <div class="card-glass p-4 h-100">
+          <div class="d-flex align-items-center mb-2">
+            <i class="bi bi-person-gear fs-4 me-2"></i>
+            <h5 class="mb-0">Виконавець</h5>
+          </div>
+          <p class="mb-0 text-muted">
+            <span data-bind="executor"></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process (static steps + dynamic details) -->
+<section id="process" class="py-5 bg-white">
+  <div class="container">
+    <h2 class="section-title h1 mb-3">Етапи робіт</h2>
+    <p class="text-muted-2 mb-4">Аудит → пріоритезація → фікси → перевірка → моніторинг.</p>
+
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="card-glass p-4 h-100">
+          <div class="step mb-4">
+            <div class="num">1</div>
+            <h5>Аудит і відтворення</h5>
+            <p class="text-muted mb-2">Логи, профілювання, ізоляція причин.</p>
+            <ul class="list-unstyled text-muted list-check">
+              <li><i class="bi bi-check2 me-2"></i>Сценарії та контекст</li>
+              <li><i class="bi bi-check2 me-2"></i>Reproduce & isolate</li>
+            </ul>
+          </div>
+
+          <div class="step mb-4">
+            <div class="num">2</div>
+            <h5>План і пріоритет</h5>
+            <p class="text-muted mb-2">Оцінка часу/ризиків, черговість задач.</p>
+            <ul class="list-unstyled text-muted list-check">
+              <li><i class="bi bi-check2 me-2"></i>Critical → High → Low</li>
+              <li><i class="bi bi-check2 me-2"></i>Quick wins</li>
+            </ul>
+          </div>
+
+          <div class="step mb-4">
+            <div class="num">3</div>
+            <h5>Фікси та оптимізація</h5>
+            <p class="text-muted mb-2">Код/запити/ресурси/мережа.</p>
+            <ul class="list-unstyled text-muted list-check">
+              <li><i class="bi bi-check2 me-2"></i>Рефакторинг</li>
+              <li><i class="bi bi-check2 me-2"></i>Оптимізація бандла/зображень</li>
+            </ul>
+          </div>
+
+          <div class="step mb-0">
+            <div class="num">4</div>
+            <h5>Перевірка й моніторинг</h5>
+            <p class="text-muted mb-2">Ретести, звіти, рекомендації.</p>
+            <ul class="list-unstyled text-muted list-check">
+              <li><i class="bi bi-check2 me-2"></i>До/після</li>
+              <li><i class="bi bi-check2 me-2"></i>Подальша підтримка</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic right column -->
+      <div class="col-lg-6">
+        <div class="card-glass p-4 h-100">
+          <div id="included-wrap" class="mb-4 hidden">
+            <h5 class="mb-3">Що включено</h5>
+            <ul id="included-list" class="list-group"></ul>
+          </div>
+
+          <div id="additional-wrap" class="mb-4 hidden">
+            <h5 class="mb-3">Додатково (за потреби)</h5>
+            <ul id="additional-list" class="text-muted mb-0"></ul>
+          </div>
+
+          <div id="discount-wrap" class="quote-line p-3 hidden">
+            <strong>Знижки:</strong> <span id="discount-text"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING CTA -->
+<section id="pricing-cta" class="py-5 hidden">
+  <div class="container">
+    <div class="pricing-card p-4 p-lg-5">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 id="pricing-title" class="h1 mb-2"></h2>
+          <p id="pricing-subtitle" class="text-muted-2 mb-0"></p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="http://localhost:8080/main#contact" class="btn btn-lg btn-gradient">
+            <i class="bi bi-send me-2"></i>Обговорити задачу
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="py-5 bg-white hidden">
+  <div class="container">
+    <h2 class="section-title h1 mb-3">Приклади покращень</h2>
+    <p id="gallery-lead" class="text-muted-2 mb-4"></p>
+
+    <div id="carouselWorks" class="carousel slide" data-bs-ride="carousel">
+      <div id="carousel-inner" class="carousel-inner rounded-4 shadow-sm"></div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselWorks" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselWorks" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+      <div id="carousel-indicators" class="carousel-indicators mt-3 position-static"></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT & TERMS -->
+<section id="contact-terms" class="py-5 hidden">
+  <div class="container">
+    <div class="row g-4">
+      <div id="contact-block" class="col-lg-6 hidden">
+        <div class="card-glass p-4 h-100">
+          <h3 class="mb-3">Як зв’язатися</h3>
+          <p class="text-muted">Зручно — форма на головній або e-mail/Telegram.</p>
+          <ul id="contacts-list" class="list-unstyled text-muted mb-0"></ul>
+          <div class="mt-3">
+            <a href="http://localhost:8080/main#contact" class="btn btn-gradient">
+              <i class="bi bi-send me-2"></i>Написати зараз
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div id="terms-block" class="col-lg-6 hidden">
+        <div class="card-glass p-4 h-100">
+          <h3 class="mb-3">Умови та оплата</h3>
+          <ul id="terms-list" class="text-muted mb-3"></ul>
+          <div id="quickstart" class="quote-line p-3 hidden">
+            <strong>Швидкий старт:</strong> <span id="quickstart-text"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq-section" class="py-5 bg-white hidden">
+  <div class="container">
+    <h2 class="section-title h1 mb-4">FAQ</h2>
+    <div id="faq-accordion" class="accordion"></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-4">
+  <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+    <div class="small">© <span id="year"></span> Puffinity. Усі права захищено.</div>
+    <div class="small d-flex flex-wrap align-items-center gap-3">
+      <a href="http://localhost:8080/main#services">Послуги</a>
+      <a href="http://localhost:8080/main#portfolio">Портфоліо</a>
+      <a href="http://localhost:8080/main#pricing">Ціни</a>
+      <a href="http://localhost:8080/main#contact">Контакт</a>
+      <span class="text-white-50">Підтримка: щодня 10:00-20:00</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<a href="#top" class="btn btn-gradient rounded-circle p-3 back-to-top" aria-label="Вгору">
+  <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- Vendor scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/http-client.js"></script>
+<script src="../js/debug.js"></script>
+</body>
+</html>
