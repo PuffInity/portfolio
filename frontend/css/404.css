@@ -1,0 +1,172 @@
+/* =======================
+   404 / ERROR PAGE STYLES
+   Працює разом з styles.css
+   ======================= */
+
+/* Фон для сторінки з помилкою */
+body.error-page {
+    /* ті ж самі відчуття, що й на головній */
+    background: var(--bg-gradient, #f8fafc);
+    min-height: 100vh;
+}
+
+/* Основна картка помилки (glass-блок у центрі) */
+.error-card {
+    text-align: left;
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow-2, 0 18px 50px rgba(15,23,42,.18));
+    border: 1px solid rgba(15,23,42,.08);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Невелике підсвічування зверху карти */
+.error-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 0 0,
+    rgba(56,189,248,.22),
+    transparent 55%);
+    opacity: .35;
+    pointer-events: none;
+}
+
+/* Великий код помилки */
+.error-code-big {
+    font-size: clamp(3.5rem, 7vw, 5rem);
+    font-weight: 800;
+    letter-spacing: .18rem;
+    line-height: 1;
+    margin-bottom: .5rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Заголовок, опис, рекомендації */
+#error-title {
+    position: relative;
+    z-index: 1;
+}
+
+#error-main,
+#error-suggestion,
+#error-extra {
+    position: relative;
+    z-index: 1;
+}
+
+/* Бейдж "Виникла помилка" всередині glass */
+.badge-soft {
+    background: rgba(241,245,249,.9);
+    color: var(--brand-text, #0b1220);
+    border: 1px solid rgba(148,163,184,.45);
+    font-size: .8rem;
+}
+
+/* ========= SEVERITY THEME ========= */
+
+/* 404 – "легка" помилка, спокійний акцент */
+.error-404 .error-code-big {
+    background: linear-gradient(
+            120deg,
+            var(--brand-accent, #0ea5e9),
+            var(--brand-accent-2, #6366f1)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Уточнення текстів */
+.error-404 #error-main {
+    color: var(--brand-muted, #64748b);
+}
+
+.error-404 #error-suggestion {
+    color: var(--brand-text, #0b1220);
+    font-weight: 500;
+}
+
+/* 4xx – клієнтські помилки (400, 401, 403 і т.д.) */
+.error-4xx .error-code-big {
+    background: linear-gradient(
+            120deg,
+            #f97316,
+            #ea580c
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.error-4xx #error-main {
+    color: #9a3412;
+}
+
+.error-4xx #error-suggestion {
+    color: #111827;
+}
+
+/* 5xx – помилки сервера */
+.error-5xx .error-code-big {
+    background: linear-gradient(
+            120deg,
+            #f97373,
+            #ef4444
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.error-5xx #error-main {
+    color: #b91c1c;
+}
+
+.error-5xx #error-suggestion {
+    color: #111827;
+}
+
+/* ========= Анімація появи ========= */
+
+.error-animate {
+    animation: errorFadeUp .45s ease-out;
+}
+
+@keyframes errorFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(.98);
+        box-shadow: 0 0 0 rgba(15,23,42,0);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: var(--shadow-2, 0 18px 50px rgba(15,23,42,.18));
+    }
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    background: #0b1220; /* ← постав тут ТОЧНО такий фон як у сайту */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+/* ========= Трохи адаптиву ========= */
+
+@media (max-width: 576px) {
+    .error-card {
+        padding: 1.75rem 1.5rem !important;
+    }
+
+    .error-code-big {
+        font-size: clamp(3rem, 16vw, 4rem);
+        letter-spacing: .12rem;
+    }
+}

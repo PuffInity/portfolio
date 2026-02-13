@@ -1,0 +1,39 @@
+/* Специфічні стилі для сторінки "Інтеграції".
+ * Базові стилі (body, .hero, .navbar, .btn-gradient, .glass, .card-glass,
+ * .section-title, .text-muted-2, .quote-line, .pricing-card, .portfolio-img, footer)
+ * бажано винести в глобальний styles.css і вже там тримати.
+ */
+
+/* Кроки процесу інтеграції (номер + текст) */
+.step {
+    position: relative;
+    padding-left: 54px;
+}
+
+.step .num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #e0f2fe, #eef2ff);
+    border: 1px solid rgba(2, 6, 23, 0.08);
+    font-weight: 700;
+}
+
+/* Список з "галочками" (для включених опцій) */
+.list-check li {
+    margin: 0.4rem 0;
+}
+
+.list-check i {
+    color: #16a34a;
+}
+
+/* Універсальний клас для приховування блоків до рендера JS */
+.hidden {
+    display: none !important;
+}

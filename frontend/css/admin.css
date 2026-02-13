@@ -1,0 +1,284 @@
+
+/* Стилі для адмін-панелі */
+
+/* Попередження адміністратора */
+.admin-warning {
+    background: linear-gradient(135deg, #fff3cd 0%, #fef9e7 100%);
+    border-bottom: 1px solid #f0e68c;
+    padding: 1rem 0;
+}
+
+/* Header адмінки */
+.admin-header {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-bottom: 1px solid #dee2e6;
+    padding: 1.5rem 0;
+}
+
+.status-pill {
+    background: #e9ecef;
+    color: #6c757d;
+    padding: 0.375rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pill.changed {
+    background: #fff3cd;
+    color: #664d03;
+    border: 1px solid #f0e68c;
+}
+
+/* Розділи/табки */
+.admin-sections-bar {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.admin-sections-title {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-sections-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.admin-section-tab {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #6c757d;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.admin-section-tab:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+    color: #495057;
+    transform: translateY(-1px);
+}
+
+.admin-section-tab.active {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-color: #0056b3;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0,123,255,0.3);
+}
+
+.admin-section-tab i {
+    font-size: 1rem;
+}
+
+/* Основна секція прев'ю */
+.admin-preview-section {
+    background: white;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.admin-preview-wrapper {
+    padding: 2rem;
+}
+
+/* Блоки прев'ю */
+.admin-preview-block {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.admin-preview-block:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.admin-block-header {
+    margin-bottom: 1.5rem;
+}
+
+.admin-block-title {
+    color: #495057;
+    font-size: 1.25rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+/* Редаговані поля */
+.editable-field {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    padding: 0.25rem;
+    margin: -0.25rem;
+}
+
+.editable-field:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+    border: 1px dashed #0d6efd;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.1);
+}
+
+.editable-field::after {
+    content: '✏️';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #0d6efd;
+    color: white;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.editable-field:hover::after {
+    opacity: 1;
+}
+
+/* Міні версії блоків */
+.mini-hero {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 12px;
+    padding: 2rem;
+    border: 1px solid #dee2e6;
+}
+
+.mini-services,
+.mini-contacts {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #dee2e6;
+}
+
+/* Карточки */
+.card-glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Icon circle */
+.icon-circle {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.875rem;
+}
+
+/* Badge стилі */
+.badge-soft {
+    background: rgba(13, 110, 253, 0.1);
+    color: #0d6efd;
+    border: 1px solid rgba(13, 110, 253, 0.2);
+}
+
+/* Кнопки градієнт */
+.btn-gradient {
+    background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,123,255,0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-sections-tabs {
+        justify-content: center;
+    }
+
+    .admin-section-tab {
+        flex: 1;
+        justify-content: center;
+        min-width: 120px;
+    }
+
+    .admin-preview-wrapper {
+        padding: 1rem;
+    }
+
+    .mini-hero {
+        padding: 1.5rem;
+    }
+}
+
+/* Анімації */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.admin-preview-block {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Стан завантаження */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
