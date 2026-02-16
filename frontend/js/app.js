@@ -529,7 +529,6 @@ function renderSite(data) {
     if (data.pricing) renderPricing(data.pricing);
     if (data.testimonials) renderTestimonials(data.testimonials);
     if (data.avatarTestimonials) renderAvatarTestimonials(data.avatarTestimonials);
-    if (data.faq) renderFAQ(data.faq);
     if (data.contacts) renderContacts(data.contacts);
     if (data.about) renderAbout(data.about);
 }
@@ -978,7 +977,6 @@ function mapMainPageFromApi(apiData) {
     const pricingSrc = Array.isArray(apiData.pricing) ? apiData.pricing : [];
     const testimonialsSrc = Array.isArray(apiData.testimonials) ? apiData.testimonials : [];
     const avatarTestimonialsSrc = Array.isArray(apiData.avatarTestimonials) ? apiData.avatarTestimonials : [];
-    const faqSrc = Array.isArray(apiData.faq) ? apiData.faq : [];
     const contactsSrc = apiData.contacts || null;
     const aboutSrc = apiData.about || null;
 
@@ -1038,14 +1036,6 @@ function mapMainPageFromApi(apiData) {
         }))
     };
 
-    const faq = {
-        items: faqSrc.map(f => ({
-            enabled: f.enabled !== false,
-            question: f.question || '',
-            answer: f.answer || ''
-        }))
-    };
-
     const contacts = contactsSrc
         ? {
             email: contactsSrc.email || '',
@@ -1081,7 +1071,7 @@ function mapMainPageFromApi(apiData) {
         }
         : null;
 
-    return { hero, services, pricing, testimonials, avatarTestimonials: avatarTestimonialsSrc, faq, contacts, about };
+    return { hero, services, pricing, testimonials, avatarTestimonials: avatarTestimonialsSrc, contacts, about };
 }
 
 /**
