@@ -1,9 +1,9 @@
-import {queryOne,executeOne} from "../db.helper.js";
+import {queryOne, executeOne, executeVoid} from "../db.helper.js";
 import {pool} from "../../config/database.config.js";
 import {helperLogger} from "../db.helper.js"
 import bcrypt from 'bcrypt'
 
-import {adminRowToEntity,toInsertAdmin,toUpdateAdmin} from "../../utils/mappers/admin.mapp.js";
+import {adminRowToEntity} from "../../utils/mappers/admin.mapp.js";
 import {isTableNotFound,isColumnNotFound} from "../../error/db.error.js";
 
 /**
@@ -114,7 +114,7 @@ export async function createAdmin (login: string, password: string) {
          */
         const passwordHash = await bcrypt.hash(password, 12)
 
-        await executeOne(`INSERT INTO admin (login,password_hash) VALUES ($1, $2)`, [login, passwordHash],toInsertAdmin,client)
+        await executeVoid(`INSERT INTO admin (login,password_hash) VALUES ($1, $2)`, [login, passwordHash],client)
         helperLogger.warn('Створений новий адміністратор!', {login})
     }catch(error) {
         if (isTableNotFound(error))  helperLogger.error('Таблиці admin не існує')
@@ -150,7 +150,7 @@ export async function deleteAdmin(login: string) {
             helperLogger.error('Адміністратор з таким логіном не інсує')
             return        }
         helperLogger.info('Адміністратор був видалений',{login: login})
-        await executeOne(`DELETE FROM admin WHERE login = $1`, [login],toUpdateAdmin,client)
+        await executeVoid(`DELETE FROM admin WHERE login = $1`, [login],client)
     }catch(error) {
         if (isTableNotFound(error))  helperLogger.error('Таблиці admin не існує')
         if (isColumnNotFound(error)) helperLogger.error('Одної або більше колонок не існує в таблиці admin')

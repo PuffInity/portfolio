@@ -3220,13 +3220,6 @@ function buildContactsPayload() {
         if (!raw) {
             clearContactsFieldError(input, key);
             input.classList.remove('is-valid', 'is-invalid');
-
-            const last = key.split('.').pop();
-
-            // email не чіпаємо (не шлемо null)
-            if (last !== 'email') {
-                contacts[last] = null;
-            }
             return;
         }
 
@@ -3249,7 +3242,8 @@ function buildContactsPayload() {
     if (hasInvalid) return { payload: null, error: 'Є помилки у контактах. Виправ або очисть невалідні поля.' };
     if (!hasAnyValue) return { payload: null, error: 'Немає жодного заповненого контакту для збереження.' };
 
-    return { payload: contacts, error: null };}
+    return { payload: { contacts }, error: null };
+}
 
 async function handleSaveContacts() {
     if (!contactsSaveBtn || contactsSaveBtn.disabled) return;
