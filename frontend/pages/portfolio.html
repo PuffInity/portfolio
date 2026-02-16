@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="uk" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Демо-кейс — Тут може бути ваш проєкт • Puffinity</title>
+  <meta name="description" content="Демонстраційна сторінка кейсу портфоліо. Тут показано, як може виглядати опис реального проєкту: задача, рішення, стек, результати, відгук." />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <style>
+    :root{
+      --bg-gradient: radial-gradient(1400px 600px at 10% -10%, #dbeafe 0%, transparent 60%),
+      radial-gradient(1000px 500px at 110% 10%, #f1f5f9 0%, transparent 60%),
+      linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      --brand-dark:#0f172a;
+      --brand-text:#0b1220;
+      --brand-muted:#64748b;
+      --brand-accent:#0ea5e9;
+      --brand-accent-2:#6366f1;
+      --glass-bg: rgba(255,255,255,.78);
+      --glass-bd: rgba(15,23,42,.12);
+      --shadow-1: 0 10px 30px rgba(2,6,23,.15);
+      --shadow-2: 0 18px 50px rgba(2,6,23,.25);
+      --radius: 1rem;
+    }
+
+    html{
+      background: var(--brand-dark);
+    }
+
+    body{
+      background:#f8fafc;
+      color:var(--brand-text);
+      scroll-behavior:smooth;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .navbar{
+      backdrop-filter:saturate(180%) blur(10px);
+      background:rgba(255,255,255,.92);
+      border-bottom:1px solid rgba(15,23,42,.06);
+    }
+    .nav-link{
+      position:relative;
+      font-weight:500;
+    }
+    .nav-link::after{
+      content:"";
+      position:absolute;
+      left:.75rem;
+      right:.75rem;
+      bottom:.35rem;
+      height:2px;
+      background:linear-gradient(90deg,var(--brand-accent),var(--brand-accent-2));
+      transform:scaleX(0);
+      transform-origin:left;
+      transition:transform .25s ease;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after{
+      transform:scaleX(1);
+    }
+
+    .hero{
+      background:var(--bg-gradient);
+      padding:6rem 0 4rem;
+    }
+
+    .badge-soft{
+      background:#e7f3ff;
+      color:#0b1220;
+      border:1px solid rgba(2,6,23,.06);
+      font-weight:500;
+    }
+    .badge-demo{
+      background:#fee2e2;
+      color:#991b1b;
+      border:1px solid rgba(248,113,113,.7);
+      font-weight:600;
+    }
+
+    .btn-gradient{
+      background:linear-gradient(90deg,var(--brand-accent),var(--brand-accent-2));
+      border:0;
+      color:#fff;
+      box-shadow:var(--shadow-1);
+      font-weight:600;
+    }
+    .btn-gradient:hover{
+      filter:saturate(1.05) brightness(1.02);
+      transform:translateY(-1px);
+      color:#fff;
+    }
+
+    .btn-outline-soft{
+      border-color:rgba(148,163,184,.7);
+      color:var(--brand-dark);
+    }
+    .btn-outline-soft:hover{
+      background:rgba(148,163,184,.08);
+      color:var(--brand-dark);
+    }
+
+    .glass{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-bd);
+      border-radius:1.25rem;
+      box-shadow:var(--shadow-1);
+    }
+
+    .section-title{
+      font-weight:800;
+      letter-spacing:.02em;
+    }
+
+    .text-muted-2{
+      color:var(--brand-muted);
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      padding:.2rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,.6);
+      font-size:.75rem;
+      color:var(--brand-muted);
+      background:rgba(255,255,255,.85);
+      backdrop-filter:blur(6px);
+      gap:.35rem;
+    }
+
+    .card-glass{
+      background:var(--glass-bg);
+      border:1px solid var(--glass-bd);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow-1);
+      transition:.25s ease;
+    }
+    .card-glass:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow-2);
+    }
+
+    .metric{
+      padding:1rem 1.1rem;
+      border-radius:.9rem;
+      background:rgba(15,23,42,.03);
+    }
+    .metric-label{
+      font-size:.8rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--brand-muted);
+    }
+    .metric-value{
+      font-weight:700;
+      font-size:1.1rem;
+    }
+
+    .timeline-dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--brand-accent);
+      box-shadow:0 0 0 6px rgba(56,189,248,.25);
+    }
+
+    .quote-line{
+      border-left:4px solid var(--brand-accent);
+      background:#f0f9ff;
+      border-radius:.5rem;
+      padding:1rem 1.25rem;
+      font-size:.95rem;
+    }
+
+    .portfolio-img{
+      aspect-ratio:16/10;
+      object-fit:cover;
+      border-radius:1rem;
+      width:100%;
+    }
+
+    footer{
+      background:var(--brand-dark);
+      color:#e2e8f0;
+    }
+    footer a{
+      color:#e2e8f0;
+      text-decoration:none;
+      font-size:.9rem;
+    }
+    footer a:hover{
+      text-decoration:underline;
+    }
+
+    .back-to-top{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:1040;
+      border-radius:999px;
+      padding:.8rem 1rem;
+      display:inline-flex;
+      align-items:center;
+      gap:.4rem;
+      font-size:.9rem;
+    }
+
+    @media (max-width: 575.98px){
+      .display-5{
+        font-size:2rem;
+      }
+    }
+  </style>
+</head>
+<body id="top">
+
+<!-- NAV -->
+<nav class="navbar navbar-expand-lg sticky-top navbar-back">
+  <a class="navbar-back-link" href="#" onclick="history.back(); return false;" aria-label="Назад">
+    <i class="bi bi-arrow-left"></i>
+  </a>
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#">Портфолио • Puffinity</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-label="Перемикач навігації">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navMain" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+        <li class="nav-item">
+          <a class="nav-link" href="http://localhost:8080/main">Головна</a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-sm btn-gradient ms-lg-2" href="http://localhost:8080/main#contact">
+            <i class="bi bi-send me-1"></i>Обговорити проєкт
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO / HEADER -->
+<header class="hero">
+  <div class="container">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-7">
+        <div class="d-flex flex-wrap gap-2 mb-3">
+          <span class="badge badge-soft rounded-pill px-3 py-2">
+            <i class="bi bi-window-stack me-1"></i> Демо-кейс портфоліо
+          </span>
+          <span class="badge badge-demo rounded-pill px-3 py-2">
+            <i class="bi bi-exclamation-triangle me-1"></i> Це не реальний проєкт, а сторінка-заглушка
+          </span>
+        </div>
+        <h1 class="display-5 fw-bold mb-3">
+          Тут може бути кейс вашого проєкту
+        </h1>
+        <p class="lead text-muted-2 mb-3">
+          На цьому місці зазвичай — реальний кейс: задача бізнесу, рішення, стек технологій,
+          цифри до/після та короткий відгук клієнта. Зараз це демонстрація того,
+          <strong>як може виглядати опис вашого проєкту</strong>.
+        </p>
+        <p class="small text-muted mb-4">
+          Весь текст і цифри нижче — умовні. Вони потрібні лише для того, щоб показати структуру
+          майбутнього кейсу. Коли з’явиться реальний проєкт, ця сторінка буде замінена на живий опис.
+        </p>
+        <div class="d-flex flex-wrap gap-3">
+          <a href="http://localhost:8080/main#contact" class="btn btn-lg btn-gradient">
+            <i class="bi bi-chat-dots me-2"></i>Хочу, щоб мій проєкт був тут
+          </a>
+          <a href="http://localhost:8080/main#portfolio" class="btn btn-lg btn-outline-soft">
+            <i class="bi bi-arrow-left me-2"></i>Назад до інших робіт
+          </a>
+        </div>
+        <div class="d-flex flex-wrap gap-2 mt-4">
+          <span class="tag"><i class="bi bi-dot"></i> Задача → рішення → результат</span>
+          <span class="tag"><i class="bi bi-dot"></i> Скріни, метрики, стек</span>
+          <span class="tag"><i class="bi bi-dot"></i> Реальний відгук клієнта</span>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="glass p-3">
+          <div class="ratio ratio-16x9 rounded-4 overflow-hidden mb-2">
+            <img
+                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop"
+                    alt="Тут може бути прев’ю вашого проєкту"
+                    style="object-fit:cover;"
+                    class="w-100"
+            >
+          </div>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span class="tag"><i class="bi bi-phone"></i> Адаптивний інтерфейс</span>
+            <span class="tag"><i class="bi bi-speedometer2"></i> Оптимізація швидкості</span>
+            <span class="tag"><i class="bi bi-bar-chart"></i> Аналітика й метрики</span>
+          </div>
+          <p class="small text-muted-2 mt-3 mb-0">
+            У реальному кейсі тут будуть <strong>скріншоти саме вашого проєкту</strong>:
+            головна сторінка, ключові екрани, адмінка, інтеграції тощо.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- PROJECT OVERVIEW -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-8">
+        <h2 class="section-title h1 mb-3">Огляд проєкту (демо)</h2>
+        <p class="text-muted-2 mb-3">
+          Цей блок показує, як виглядає базовий опис кейсу. Далі зазвичай йде коротка
+          історія: хто клієнт, з чим він прийшов і чого хотів досягти.
+        </p>
+        <ul class="text-muted mb-4">
+          <li><strong>Ніша:</strong> умовний онлайн-сервіс / магазин / SaaS.</li>
+          <li><strong>Ціль:</strong> підняти конверсію, прискорити сайт, зробити нормальний мобільний досвід.</li>
+          <li><strong>Роль:</strong> розробка фронтенду, інтеграції, оптимізація, підтримка.</li>
+        </ul>
+
+        <div class="row g-3 mb-4">
+          <div class="col-sm-4">
+            <div class="metric">
+              <div class="metric-label">Час розробки (демо)</div>
+              <div class="metric-value">3–5 тижнів</div>
+              <div class="small text-muted">Залежить від складності та обсягу.</div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="metric">
+              <div class="metric-label">Сторінок</div>
+              <div class="metric-value">5–10</div>
+              <div class="small text-muted">Лендінг + внутрішні сторінки.</div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="metric">
+              <div class="metric-label">Інтеграції</div>
+              <div class="metric-value">2–4</div>
+              <div class="small text-muted">Оплати, пошта, аналітика, карти.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quote-line mb-4">
+          <strong>Важливо:</strong> усе, що ви бачите тут — <strong>демонстраційний текст</strong>.
+          У реальному портфоліо на цьому місці буде живий проєкт з вашими цифрами, вашою історією
+          та вашими результатами.
+        </div>
+
+        <h3 class="h4 mb-2">Задача (як це виглядає в кейсі)</h3>
+        <p class="text-muted mb-3">
+          Клієнт мав умовний старий сайт з повільним завантаженням, нечіткою структурою
+          та слабкою мобільною версією. Задача — оновити інтерфейс, спростити шлях користувача,
+          підключити аналітику та базові інтеграції.
+        </p>
+
+        <h3 class="h4 mb-2 mt-4">Рішення</h3>
+        <p class="text-muted mb-2">
+          Опишу стек, підхід та ключові фічі. Наприклад: верстка на Bootstrap 5,
+          чистий JS для інтерактиву, інтеграція з платіжними сервісами, e-mail, аналітикою.
+        </p>
+        <ul class="text-muted mb-4">
+          <li>Прототипування ключових сторінок.</li>
+          <li>Верстка адаптивних макетів.</li>
+          <li>Підключення інтеграцій (демо-текст).</li>
+          <li>Оптимізація швидкості та базовий SEO.</li>
+        </ul>
+      </div>
+
+      <!-- TECH STACK / SIDEBAR -->
+      <div class="col-lg-4">
+        <div class="card-glass p-3 mb-3">
+          <h5 class="mb-3">Технології (приклад)</h5>
+          <ul class="list-unstyled small text-muted mb-0">
+            <li><i class="bi bi-check2-circle text-success me-2"></i>HTML5, CSS3, Bootstrap 5</li>
+            <li><i class="bi bi-check2-circle text-success me-2"></i>Чистий JavaScript (без фреймворків)</li>
+            <li><i class="bi bi-check2-circle text-success me-2"></i>Інтеграції: Stripe/PayPal, e-mail, аналітика</li>
+            <li><i class="bi bi-check2-circle text-success me-2"></i>Базова SEO-оптимізація</li>
+          </ul>
+        </div>
+
+        <div class="card-glass p-3">
+          <h6 class="mb-2">Цей кейс — шаблон</h6>
+          <p class="small text-muted mb-3">
+            Коли з’явиться новий завершений проєкт, ця сторінка буде повністю
+            переписана під нього: зміниться назва, тексти, скріни, стек і цифри.
+          </p>
+          <a href="http://localhost:8080/main#contact" class="btn btn-sm btn-gradient w-100">
+            <i class="bi bi-send me-1"></i>Обговорити реальний кейс
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY (ДЕМО СЛАЙДИ) -->
+<section class="py-5">
+  <div class="container">
+    <h2 class="section-title h1 mb-3">Скріншоти інтерфейсу (демо)</h2>
+    <p class="text-muted-2 mb-4">
+      У живому проєкті тут будуть <strong>реальні картинки саме вашого продукту</strong>.
+      Поки що — приклади з Unsplash для демонстрації структури.
+    </p>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="card-glass p-2 h-100">
+          <img
+                  data-allow-external="1"
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"
+                  alt="Головна сторінка (демо)"
+                  class="portfolio-img"
+          >
+          <div class="p-2">
+            <h6 class="mb-1">Головна сторінка</h6>
+            <p class="small text-muted mb-0">
+              В реальному кейсі — опис ключових елементів головної сторінки.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-glass p-2 h-100">
+          <img
+                  data-allow-external="1"
+                  src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=1600&auto=format&fit=crop"
+                  alt="Особистий кабінет (демо)"
+                  class="portfolio-img"
+          >
+          <div class="p-2">
+            <h6 class="mb-1">Особистий кабінет</h6>
+            <p class="small text-muted mb-0">
+              Тут може бути скрін з профілем, налаштуваннями, замовленнями тощо.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card-glass p-2 h-100">
+          <img
+                  data-allow-external="1"
+                  src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?q=80&w=1600&auto=format&fit=crop"
+                  alt="Мобільна версія (демо)"
+                  class="portfolio-img"
+          >
+          <div class="p-2">
+            <h6 class="mb-1">Мобільна версія</h6>
+            <p class="small text-muted mb-0">
+              Приклад, як показати адаптивність: мобільні скріни, UX-рішення.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESULT + FEEDBACK (ДЕМО) -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row g-4 align-items-start">
+      <div class="col-lg-7">
+        <h2 class="section-title h1 mb-3">Результати (умовні для демо)</h2>
+        <p class="text-muted mb-3">
+          У реальному кейсі тут будуть конкретні цифри та ефекти. Зараз — приклад,
+          як це може виглядати в структурі.
+        </p>
+        <ul class="text-muted mb-4">
+          <li><strong>Швидкість завантаження:</strong> умовно з 4.5 с до 1.2 с.</li>
+          <li><strong>Конверсія:</strong> умовно +18–25% до кількості заявок.</li>
+          <li><strong>SEO:</strong> базова оптимізація, кращий технічний стан сайту.</li>
+        </ul>
+
+        <div class="quote-line mb-3">
+          «Тут може бути короткий, але живий відгук клієнта: що змінилося після релізу,
+          що сподобалося в співпраці, які плани на наступні оновлення».
+        </div>
+        <p class="small text-muted mb-0">
+          Цей текст — лише приклад. Після запуску реального проєкту сюди буде додано
+          справжню цитату, ім’я, посаду та, за бажанням, логотип компанії.
+        </p>
+      </div>
+      <div class="col-lg-5">
+        <div class="card-glass p-3">
+          <h5 class="mb-3">Що буде далі з цією сторінкою</h5>
+          <ol class="small text-muted mb-3">
+            <li>З’являється завершений комерційний/навчальний проєкт.</li>
+            <li>Фіксуємо задачі, рішення, стек, цифри до/після.</li>
+            <li>Переписуємо цей демо-текст під реальний кейс.</li>
+            <li>Додаємо реальні скріни та, за бажанням, відео.</li>
+          </ol>
+          <a href="http://localhost:8080/main#contact" class="btn btn-gradient w-100">
+            <i class="bi bi-lightning-charge me-1"></i>Почати проєкт
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="py-4">
+  <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+    <div class="small">
+      © <span id="year"></span> Puffinity. Усі права захищено.
+    </div>
+    <div class="small d-flex flex-wrap align-items-center gap-3">
+      <a href="http://localhost:8080/main#services">Послуги</a>
+      <a href="http://localhost:8080/main#portfolio">Портфоліо</a>
+      <a href="http://localhost:8080/main#pricing">Ціни</a>
+      <a href="http://localhost:8080/main#contact">Контакт</a>
+      <span class="text-white-50">Підтримка: щодня 10:00-20:00</span>
+    </div>
+  </div>
+</footer>
+
+<a href="#top" class="btn btn-gradient back-to-top" aria-label="Вгору">
+  <i class="bi bi-arrow-up"></i><span class="d-none d-sm-inline">Вгору</span>
+</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/http-client.js"></script>
+<script>
+  // Поточний рік
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Закриття меню на мобільному після кліку
+  const navMain = document.getElementById('navMain');
+  if (navMain) {
+    const links = navMain.querySelectorAll('.nav-link');
+    links.forEach(a =>
+            a.addEventListener('click', () => {
+              const toggler = document.querySelector('.navbar-toggler');
+              if (toggler && getComputedStyle(toggler).display !== 'none') {
+                const bsCollapse = bootstrap.Collapse.getOrCreateInstance('#navMain');
+                bsCollapse.hide();
+              }
+            })
+    );
+  }
+</script>
+</body>
+</html>

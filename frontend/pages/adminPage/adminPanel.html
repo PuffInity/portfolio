@@ -1,0 +1,2061 @@
+<!doctype html>
+<html lang="uk" data-bs-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Puffinity — Адмін панель</title>
+  <meta name="description" content="Адмін панель для керування сайтом Puffinity: головна сторінка, сервіси, відгуки, контакти." />
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+
+  <!-- Основні стилі сайту -->
+  <link rel="stylesheet" href="../../css/styles.css" />
+  <!-- Стилі саме адмін-панелі -->
+  <link rel="stylesheet" href="../../css/adminPanel.css" />
+</head>
+
+<body id="top" class="admin-body">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="http://localhost:8080/main">
+      Puffinity • Розробник
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="adminNav" class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+        <li class="nav-item d-none d-lg-block">
+          <span class="badge text-bg-dark rounded-pill px-3 py-2">
+            <i class="bi bi-shield-lock me-1"></i>Адмін панель
+          </span>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-sm btn-outline-secondary ms-lg-2" href="http://localhost:8080/main">
+            <i class="bi bi-arrow-left-circle me-1"></i>На головну
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-sm btn-outline-danger ms-lg-2" href="http://localhost:3000/admin/adminLogout" id="admin-logout-btn">
+            <i class="bi bi-box-arrow-right me-1"></i>Вийти
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="admin-unavailable" class="admin-unavailable d-none">
+  <div class="admin-unavailable-card">
+    <div class="admin-unavailable-title">Адмін панель недоступна</div>
+    <div class="admin-unavailable-text">
+      Схоже, що дані з бекенда не завантажились. Спробуйте оновити сторінку або зверніться до IT‑адміністратора.
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="admin-main">
+  <div class="container">
+    <div class="row g-4">
+
+      <!-- SIDEBAR -->
+      <aside class="col-lg-3">
+        <div class="admin-sidebar">
+          <div class="card-glass p-3 mb-3">
+            <div class="small text-muted mb-1">Розділи</div>
+            <div class="fw-semibold">Налаштування сайту</div>
+          </div>
+
+          <ul class="nav nav-pills flex-lg-column admin-menu" id="admin-menu">
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link active" data-admin-target="#admin-home">
+                <i class="bi bi-house-door"></i>
+                <span>Головна сторінка</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link" data-admin-target="#admin-services">
+                <i class="bi bi-window-stack"></i>
+                <span>Сервіси</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link" data-admin-target="#admin-testimonials">
+                <i class="bi bi-chat-square-text"></i>
+                <span>Відгуки</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link" data-admin-target="#admin-contacts">
+                <i class="bi bi-person-lines-fill"></i>
+                <span>Контакти</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2">
+              <a href="#" class="nav-link" data-admin-target="#admin-faq">
+                <i class="bi bi-question-circle"></i>
+                <span>FAQ</span>
+              </a>
+            </li>
+            <li class="nav-item mb-2 mt-3">
+              <a href="http://localhost:3000/metrics" class="nav-link" target="_blank" rel="noopener"
+                 onclick="window.open(this.href, '_blank', 'noopener'); return false;">
+                <i class="bi bi-graph-up-arrow"></i>
+                <span>Метрика</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <!-- CONTENT -->
+      <section class="col-lg-9">
+
+        <!-- ================= ГОЛОВНА СТОРІНКА ================= -->
+        <div id="admin-home" class="admin-section">
+          <div class="admin-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <div>
+                <div class="admin-section-title mb-1">
+                  <i class="bi bi-house-door"></i>
+                  <span>Головна сторінка</span>
+                </div>
+                <p class="text-muted mb-0">
+                  Редагування головної сторінки
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- LEFT: FORMS -->
+            <div class="col-md-6">
+              <div class="admin-card p-4 h-100">
+
+                <!-- HERO -->
+                <h6 class="text-uppercase small text-muted mb-2">Головний блок</h6>
+
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="hero-title-input">
+                    Заголовок
+                  </label>
+                  <input
+                          type="text"
+                          id="hero-title-input"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="hero.title"
+                          placeholder="Створюю продакшн-рівень backend та інтеграції для бізнесу"
+                          maxlength="120"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="hero-subtitle-input">
+                    Підзаголовок
+                  </label>
+                  <textarea
+                          id="hero-subtitle-input"
+                          rows="2"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="hero.subtitle"
+                          placeholder="Коротко поясни, чим ти займаєшся і яку цінність даєш клієнту."
+                          maxlength="240"
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Кнопка 1 — основна дія
+                  </label>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="hero.buttonText1"
+                              placeholder="Наприклад: Замовити сайт"
+                              maxlength="40"
+                      >
+                    </div>
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="hero.buttonPath1"
+                              placeholder="#services або шлях"
+                              maxlength="120"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Кнопка 2 — додаткова дія
+                  </label>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="hero.buttonText2"
+                              placeholder="Наприклад: Подивитись роботи"
+                              maxlength="40"
+                      >
+                    </div>
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="hero.buttonPath2"
+                              placeholder="#portfolio або шлях"
+                              maxlength="120"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="hero-bullets-input">
+                    Буліти
+                  </label>
+                  <textarea
+                          id="hero-bullets-input"
+                          rows="3"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="hero.bullets"
+                          placeholder="Кожен пункт з нового рядка"
+                          maxlength="600"
+                  ></textarea>
+                </div>
+
+                <!-- ABOUT -->
+                <div class="divider-label">Блок «Про мене»</div>
+                <div class="divider-line"></div>
+
+                <p class="text-muted small">
+                  Відповідає блоку «Про мене» на головній.
+                </p>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="about-title-input">
+                    Заголовок
+                  </label>
+                  <input
+                          type="text"
+                          id="about-title-input"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="about.title"
+                          placeholder="Хто я і чим допомагаю бізнесу"
+                          maxlength="120"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="about-description-input">
+                    Опис
+                  </label>
+                  <textarea
+                          id="about-description-input"
+                          rows="3"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="about.description"
+                          placeholder="Кілька речень про твою експертизу, підхід та цінності."
+                          maxlength="800"
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Фокус
+                  </label>
+                  <div class="row g-2">
+                    <div class="col-5">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.focusLabel"
+                              placeholder="Напр., Фокус"
+                              maxlength="40"
+                      >
+                    </div>
+                    <div class="col-7">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.focusValue"
+                              placeholder="Backend • Інтеграції • Оптимізація"
+                              maxlength="120"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Стек
+                  </label>
+                  <div class="row g-2">
+                    <div class="col-5">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.stackLabel"
+                              placeholder="Напр., Стек"
+                              maxlength="40"
+                      >
+                    </div>
+                    <div class="col-7">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.stackValue"
+                              placeholder="Node.js, Express, PostgreSQL, Redis…"
+                              maxlength="160"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="about-features-input">
+                    Особливості (features)
+                  </label>
+                  <textarea
+                          id="about-features-input"
+                          rows="3"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="about.features"
+                          placeholder="Кожна особливість з нового рядка"
+                          maxlength="600"
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Кнопки
+                  </label>
+                  <div class="row g-2 mb-2">
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.cta1Text"
+                              placeholder="Текст кнопки 1"
+                              maxlength="40"
+                      >
+                    </div>
+                    <div class="col-6">
+                      <input
+                              type="text"
+                              class="form-control form-control-sm admin-input"
+                              data-field-key="about.cta2Text"
+                              placeholder="Текст кнопки 2"
+                              maxlength="40"
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SERVICE CARD -->
+                <div class="divider-label">Карточка сервісів</div>
+                <div class="divider-line"></div>
+
+                <p class="text-muted small">
+                  Відповідає одній карточці з блоку «Послуги».
+                  Спочатку вибери, яку карточку редагувати.
+                </p>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Вибрати сервіс
+                  </label>
+                  <select id="service-select" class="form-select form-select-sm">
+                    <option value="" selected>— Не вибрано —</option>
+                  </select>
+                </div>
+
+                <div id="service-fields" class="d-none">
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Назва</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="service.title"
+                          placeholder="Наприклад: Сайт «під ключ»"
+                          maxlength="80"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Опис</label>
+                  <textarea
+                          class="form-control form-control-sm admin-input"
+                          rows="3"
+                          data-field-key="service.description"
+                          placeholder="Сучасний адаптивний сайт: дизайн, верстка, SEO..."
+                          maxlength="600"
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Ціна</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="service.priceLabel"
+                          placeholder="$1000 або інший формат"
+                          maxlength="40"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Текст кнопки</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="service.ctaText"
+                          placeholder="Дізнатись більше"
+                          maxlength="40"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">URL кнопки</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="service.ctaHref"
+                          placeholder="/pages/service1.html"
+                          maxlength="200"
+                  >
+                </div>
+
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">HTML іконки</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="service.iconHtml"
+                          placeholder='<i class="bi bi-window-stack"></i>'
+                          maxlength="160"
+                  >
+                  <div class="form-text small">Встав свій Bootstrap icon HTML.</div>
+                </div>
+
+                </div>
+
+                <!-- PRICING CARD -->
+                <div class="divider-label">Карточка цін</div>
+                <div class="divider-line"></div>
+
+                <p class="text-muted small">
+                  Це одна карточка з блоку «Ціни». Спочатку вибери тариф, який хочеш змінити.
+                </p>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">
+                    Вибрати тариф
+                  </label>
+                  <select id="pricing-select" class="form-select form-select-sm">
+                    <option value="" selected>— Не вибрано —</option>
+                  </select>
+                </div>
+
+                <div id="pricing-fields" class="d-none">
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Назва тарифу</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="pricing.title"
+                          placeholder="Наприклад: Старт"
+                          maxlength="60"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Ціна</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="pricing.priceLabel"
+                          placeholder="$300 / разово або інший формат"
+                          maxlength="40"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Опції</label>
+                  <textarea
+                          class="form-control form-control-sm admin-input"
+                          rows="3"
+                          data-field-key="pricing.features"
+                          placeholder="Кожна опція з нового рядка"
+                          maxlength="700"
+                  ></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Текст бейджа</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="pricing.badge"
+                          placeholder="Наприклад: Популярний або залишити пустим"
+                          maxlength="40"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Текст кнопки</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="pricing.ctaText"
+                          placeholder="Замовити"
+                          maxlength="40"
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">URL кнопки</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="pricing.ctaHref"
+                          placeholder="#contact або шлях"
+                          maxlength="200"
+                  >
+                </div>
+
+                </div>
+
+                <!-- ===== ЄДИНА КНОПКА ЗБЕРЕЖЕННЯ ГОЛОВНОЇ (ВНИЗУ) ===== -->
+                <div class="mt-4 d-flex justify-content-end">
+                  <button
+                          id="main-save-btn"
+                          type="button"
+                          class="btn btn-sm btn-gradient"
+                          disabled
+                  >
+                    <i class="bi bi-save me-1"></i>
+                    Зберегти головну сторінку
+                  </button>
+                </div>
+                <!-- ===== /КІНЕЦЬ КНОПКИ ===== -->
+
+
+                <!-- ===== ЗОБРАЖЕННЯ (ОКРЕМИЙ БЛОК) ===== -->
+                <div class="divider-label mt-4">Зображення</div>
+                <div class="divider-line"></div>
+
+                <p class="text-muted small mb-3">
+                  Формат: лише зображення. Максимальний розмір: 2 MB.
+                </p>
+
+                <!-- HERO IMAGE -->
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold" for="home-hero-image-file">
+                    Зображення Hero (верх сторінки) — до 2 MB
+                  </label>
+
+                  <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <input
+                            type="file"
+                            id="home-hero-image-file"
+                            name="gallery_main"
+                            class="form-control form-control-sm"
+                            accept="image/*"
+                            data-upload-for="hero.image"
+                    >
+
+                    <button
+                            id="home-hero-image-save-btn"
+                            type="button"
+                            class="btn btn-sm btn-gradient"
+                            data-save-upload-for="hero.image"
+                            disabled
+                    >
+                      <i class="bi bi-upload me-1"></i>
+                      Зберегти фотографію
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ABOUT IMAGE -->
+                <div class="mb-0">
+                  <label class="form-label small fw-semibold" for="home-about-image-file">
+                    Зображення “Про мене” — до 2 MB
+                  </label>
+
+                  <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <input
+                            type="file"
+                            id="home-about-image-file"
+                            name="gallery_about_me"
+                            class="form-control form-control-sm"
+                            accept="image/*"
+                            data-upload-for="about.image"
+                    >
+                    <button
+                            id="home-about-image-save-btn"
+                            type="button"
+                            class="btn btn-sm btn-gradient"
+                            data-save-upload-for="about.image"
+                            disabled
+                    >
+                      <i class="bi bi-upload me-1"></i>
+                      Зберегти фотографію
+                    </button>
+                  </div>
+                </div>
+                <!-- ===== /ЗОБРАЖЕННЯ ===== -->
+
+              </div>
+            </div>
+
+            <!-- RIGHT: PREVIEW -->
+            <div class="col-md-6">
+              <div class="admin-card p-4 h-100">
+                <h6 class="text-uppercase small text-muted mb-2">
+                  Превʼю головної сторінки
+                </h6>
+                <p class="text-muted small mb-3">
+                  Це лише візуальна копія. Клік по тексту/кнопці → підсвічує відповідне поле зліва.
+                </p>
+
+                <!-- HERO PREVIEW -->
+                <div class="admin-preview-wrapper">
+                  <div class="admin-preview-header">
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="ms-2 small text-muted">Puffinity — Hero</span>
+                  </div>
+                  <div class="admin-preview-body">
+                    <div class="preview-hero">
+                      <div class="preview-hero-text">
+                        <span class="preview-badge">Якість • Швидкість • Прозорість</span>
+                        <div
+                                class="preview-title-text editable-preview"
+                                data-field-key="hero.title"
+                                data-default-text="Створюю продакшн-рівень backend та інтеграції"
+                        >
+                          Створюю продакшн-рівень backend та інтеграції
+                        </div>
+                        <div
+                                class="preview-subtitle-text editable-preview"
+                                data-field-key="hero.subtitle"
+                                data-default-text="Сайти, інтеграції, оптимізація, дебаг — все під ключ."
+                        >
+                          Сайти, інтеграції, оптимізація, дебаг — все під ключ.
+                        </div>
+                        <div class="preview-cta-row">
+                          <button
+                                  type="button"
+                                  class="preview-cta-btn primary editable-preview"
+                                  data-field-key="hero.buttonText1"
+                                  data-default-text="Замовити сайт"
+                          >
+                            <i class="bi bi-rocket-takeoff"></i>
+                            <span>Замовити сайт</span>
+                          </button>
+                          <button
+                                  type="button"
+                                  class="preview-cta-btn secondary editable-preview"
+                                  data-field-key="hero.buttonText2"
+                                  data-default-text="Подивитись роботи"
+                          >
+                            <i class="bi bi-images"></i>
+                            <span>Подивитись роботи</span>
+                          </button>
+                        </div>
+                        <div
+                                class="mt-2 tag-list-badges editable-preview"
+                                data-field-key="hero.bullets"
+                                data-preview-type="list"
+                                data-placeholder="Буліти зʼявляться тут"
+                        >
+                          <span class="badge">Backend для бізнесу</span>
+                          <span class="badge">Інтеграції з сервісами</span>
+                          <span class="badge">Оптимізація швидкості</span>
+                        </div>
+                      </div>
+                      <div
+                              class="preview-hero-image js-focus-image"
+                              data-focus-input="home-hero-image-file"
+                              data-default-image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
+                              style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop');"
+                      ></div>
+                    </div>
+                    <div class="preview-footer">
+                      <span>Hero • Верх сторінки</span>
+                      <span>puffinity.dev</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ABOUT PREVIEW -->
+                <div class="admin-preview-wrapper">
+                  <div class="admin-preview-header">
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="ms-2 small text-muted">Puffinity — Про мене</span>
+                  </div>
+                  <div class="admin-preview-body">
+                    <div class="preview-about">
+                      <div
+                              class="preview-about-image js-focus-image"
+                              data-focus-input="home-about-image-file"
+                              data-default-image="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop"
+                              style="background-image:url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&w=1200&auto=format&fit=crop');"
+                      ></div>
+                      <div class="preview-about-text">
+                        <div class="preview-about-title-main">Про мене</div>
+                        <div
+                                class="preview-about-title editable-preview"
+                                data-field-key="about.title"
+                                data-default-text="Хто я і чим допомагаю бізнесу"
+                        >
+                          Хто я і чим допомагаю бізнесу
+                        </div>
+                        <div
+                                class="preview-about-description editable-preview"
+                                data-field-key="about.description"
+                                data-default-text="Розробляю backend, інтеграції та оптимізую процеси для малого та середнього бізнесу."
+                        >
+                          Розробляю backend, інтеграції та оптимізую процеси для малого та середнього бізнесу.
+                        </div>
+                        <div class="preview-about-tags">
+                          <span
+                                  class="preview-about-tag editable-preview"
+                                  data-field-key="about.focusValue"
+                                  data-default-text="Backend • Інтеграції • Оптимізація"
+                          >
+                            Backend • Інтеграції • Оптимізація
+                          </span>
+                          <span
+                                  class="preview-about-tag editable-preview"
+                                  data-field-key="about.stackValue"
+                                  data-default-text="Node.js • Express • PostgreSQL • Redis"
+                          >
+                            Node.js • Express • PostgreSQL • Redis
+                          </span>
+                        </div>
+                        <div
+                                class="tag-list-badges mt-1 editable-preview"
+                                data-field-key="about.features"
+                                data-preview-type="list"
+                                data-placeholder="Особливості зʼявляться тут"
+                        >
+                          <span class="badge">Прозорі дедлайни</span>
+                          <span class="badge">Пояснюю простими словами</span>
+                        </div>
+                        <div class="preview-about-ctas">
+                          <button
+                                  type="button"
+                                  class="preview-cta-btn secondary editable-preview"
+                                  data-field-key="about.cta1Text"
+                                  data-default-text="Подивитись роботи"
+                          >
+                            <i class="bi bi-images"></i>
+                            <span>Подивитись роботи</span>
+                          </button>
+                          <button
+                                  type="button"
+                                  class="preview-cta-btn primary editable-preview"
+                                  data-field-key="about.cta2Text"
+                                  data-default-text="Обговорити проєкт"
+                          >
+                            <i class="bi bi-send"></i>
+                            <span>Обговорити проєкт</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="preview-footer">
+                      <span>Про мене • середина сторінки</span>
+                      <span>puffinity.dev/about</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- SERVICE CARD PREVIEW -->
+                <div class="admin-preview-wrapper preview-service-card">
+                  <div class="admin-preview-header">
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="ms-2 small text-muted">Puffinity — Карточка сервісу</span>
+                  </div>
+                  <div class="admin-preview-body">
+                    <div class="card p-3">
+                      <div class="d-flex align-items-center mb-3">
+                        <div
+                                class="icon-circle editable-preview"
+                                data-field-key="service.iconHtml"
+                                data-preview-type="html"
+                                data-default-text='<i class="bi bi-window-stack"></i>'
+                        >
+                          <i class="bi bi-window-stack"></i>
+                        </div>
+                        <h6
+                                class="mb-0 ms-2 editable-preview"
+                                data-field-key="service.title"
+                                data-default-text="Сайт «під ключ»"
+                        >
+                          Сайт «під ключ»
+                        </h6>
+                      </div>
+                      <p
+                              class="text-muted small editable-preview"
+                              data-field-key="service.description"
+                              data-default-text="Сучасний адаптивний сайт: дизайн, верстка, базовий SEO і підготовка до реклами."
+                      >
+                        Сучасний адаптивний сайт: дизайн, верстка, базовий SEO і підготовка до реклами.
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center mt-2">
+                        <span
+                                class="fw-semibold editable-preview"
+                                data-field-key="service.priceLabel"
+                                data-default-text="$1000+"
+                        >
+                          $1000+
+                        </span>
+                        <a
+                                href="#"
+                                class="btn btn-sm btn-outline-primary editable-preview"
+                                data-field-key="service.ctaText"
+                                data-default-text="Дізнатись більше"
+                        >
+                          Дізнатись більше
+                        </a>
+                      </div>
+                    </div>
+                    <div class="preview-footer">
+                      <span>Одна карточка з блоку «Послуги»</span>
+                      <span>puffinity.dev#services</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- PRICING CARD PREVIEW -->
+                <div class="admin-preview-wrapper preview-pricing-card">
+                  <div class="admin-preview-header">
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="admin-preview-dot"></span>
+                    <span class="ms-2 small text-muted">Puffinity — Карточка цін</span>
+                  </div>
+
+                  <div class="admin-preview-body">
+                    <div class="card p-3">
+                      <div class="d-flex justify-content-between align-items-start mb-2">
+                        <div>
+                          <h6
+                                  class="mb-1 editable-preview"
+                                  data-field-key="pricing.title"
+                                  data-default-text="Старт"
+                          >
+                            Старт
+                          </h6>
+                          <div
+                                  class="fw-bold fs-4 editable-preview"
+                                  data-field-key="pricing.priceLabel"
+                                  data-default-text="$1000"
+                          >
+                            $1000
+                          </div>
+                        </div>
+
+                        <span
+                                class="small text-muted editable-preview"
+                                data-field-key="pricing.badge"
+                                data-default-text="лендинг"
+                        >
+                          лендинг
+                        </span>
+                      </div>
+
+                      <div
+                              class="editable-preview tag-list-badges mb-3"
+                              data-field-key="pricing.features"
+                              data-preview-type="list"
+                              data-placeholder="Опції тарифу зʼявляться тут"
+                      >
+                        <span class="badge d-block text-start">Дизайн + верстка</span>
+                        <span class="badge d-block text-start">Базовий SEO</span>
+                        <span class="badge d-block text-start">1 місяць підтримки</span>
+                      </div>
+
+                      <button
+                              type="button"
+                              class="btn btn-sm btn-outline-primary w-100 editable-preview"
+                              data-field-key="pricing.ctaText"
+                              data-default-text="Замовити"
+                              data-work-btn="pricing"
+                      >
+                        Замовити
+                      </button>
+                    </div>
+
+                    <div class="preview-footer">
+                      <span>Один тариф з блоку «Ціни»</span>
+                      <span>puffinity.dev#pricing</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= СЕРВІСИ (СТОРІНКИ СЕРВІСІВ) ================= -->
+        <div id="admin-services" class="admin-section d-none">
+          <div class="admin-card p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <div>
+                <div class="admin-section-title mb-1">
+                  <i class="bi bi-window-stack"></i>
+                  <span>Сторінки сервісів</span>
+                </div>
+                <p class="text-muted mb-1">
+                  Обери сервіс — зʼявляться поля для редагування його сторінки
+                </p>
+              </div>
+              <span class="badge text-bg-warning-subtle">
+        <i class="bi bi-tools me-1"></i>Редагування сторінок сервісів
+      </span>
+            </div>
+          </div>
+
+          <div class="admin-card p-4">
+            <!-- ВИБІР СТОРІНКИ СЕРВІСУ -->
+            <div class="mb-4">
+              <label for="service-page-select" class="form-label small fw-semibold">
+                Вибери сервіс
+              </label>
+              <select id="service-page-select" class="form-select form-select-sm">
+                <option value="" selected>— Вибрати сторінку сервісу —</option>
+              </select>
+            </div>
+
+            <div id="service-page-fields" class="d-none">
+              <div class="row g-4">
+
+                <!-- ЛІВА ЧАСТИНА: ФОРМИ -->
+                <div class="col-lg-6">
+                  <div class="h-100 d-flex flex-column gap-4">
+
+                    <!-- HERO СТОРІНКИ СЕРВІСУ -->
+                    <div class="admin-card p-3">
+                      <h6 class="text-uppercase small text-muted mb-2">Hero сторінки сервісу</h6>
+                      <p class="text-muted small mb-3">
+                        Відповідає верхньому блоку сторінки сервісу (заголовок, опис, кнопки, зображення).
+                      </p>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Бейдж</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.badge"
+                                placeholder="Наприклад: Інтеграції • API • Оплати"
+                                maxlength="60"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Заголовок</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.title"
+                                placeholder="Наприклад: Інтеграції для бізнесу без головного болю"
+                                maxlength="120"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Опис</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.hero.lead"
+                                placeholder="Короткий опис, що саме дає ця послуга."
+                                maxlength="300"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold" for="service-hero-image-file">
+                          Завантажити зображення (файл) — до 2 MB
+                        </label>
+
+                        <div class="d-flex flex-wrap gap-2 align-items-center">
+                          <input
+                                  type="file"
+                                  id="service-hero-image-file"
+                                  class="form-control form-control-sm"
+                                  accept="image/*"
+                                  data-upload-for="svc.hero.image"
+                          >
+
+                          <button
+                                  id="service-hero-image-save-btn"
+                                  type="button"
+                                  class="btn btn-sm btn-gradient"
+                                  data-save-upload-for="svc.hero.image"
+                                  disabled
+                          >
+                            <i class="bi bi-upload me-1"></i>
+                            Зберегти фотографію
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="row g-2 mb-2">
+                        <div class="col-6">
+                          <label class="form-label small fw-semibold">Тривалість (duration)</label>
+                          <input
+                                  type="text"
+                                  class="form-control form-control-sm admin-input"
+                                  data-field-key="svc.hero.duration"
+                                  placeholder="Напр.: 1–3 тижні"
+                                  maxlength="40"
+                          >
+                        </div>
+
+                        <div class="col-6">
+                        <label class="form-label small fw-semibold">Ціна в Hero</label>
+                          <input
+                                  type="text"
+                                  class="form-control form-control-sm admin-input"
+                                  data-field-key="svc.hero.priceHero"
+                                  placeholder="Напр.: від $500"
+                                  maxlength="40"
+                          >
+                        </div>
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Виконавець</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.executor"
+                                placeholder="Напр.: Ігор, backend-розробник"
+                                maxlength="80"
+                        >
+                      </div>
+
+                    <div class="divider-label mt-3 mb-2">Кнопки</div>
+                      <div class="divider-line"></div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Кнопка 1 — текст</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.textBtn1"
+                                placeholder="Наприклад: Дивитись етапи"
+                                maxlength="40"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Кнопка 1 — href</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.hrefBtn1"
+                                placeholder="#process або якір на секцію"
+                                maxlength="120"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Кнопка 2 — текст</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.textBtn2"
+                                placeholder="Наприклад: Подивитись приклади"
+                                maxlength="40"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Кнопка 2 — href</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.hero.hrefBtn2"
+                                placeholder="#gallery або інша секція"
+                                maxlength="120"
+                        >
+                      </div>
+                    </div>
+
+                    <!-- OPTIONS / УМОВИ -->
+                    <div class="admin-card p-3">
+                    <h6 class="text-uppercase small text-muted mb-2">Умови та опції</h6>
+                      <p class="text-muted small mb-3">
+                        Відповідає блоку «Що включено», «Додатково», знижки та CTA з ціною.
+                      </p>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Що включено</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="3"
+                                data-field-key="svc.options.include"
+                                placeholder="Кожен пункт з нового рядка"
+                                maxlength="700"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Додатково</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="3"
+                                data-field-key="svc.options.additional"
+                                placeholder="Кожен пункт з нового рядка"
+                                maxlength="700"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Текст про знижки</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.options.discount"
+                                placeholder="Наприклад: Знижка при комбінації з іншими послугами."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+
+                      <div class="divider-label mt-3 mb-2">Ціна / CTA блоку оплати</div>
+                      <div class="divider-line"></div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Заголовок ціни</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.options.price_title"
+                                placeholder="Наприклад: Пакет інтеграцій для вашого бізнесу"
+                                maxlength="120"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Підзаголовок</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.options.price_subtitle"
+                                placeholder="Пояснення, за що саме ви платите."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Ціна</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.options.price"
+                                placeholder="Наприклад: від $500 або 10 000 Kč+"
+                                maxlength="60"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Умови</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="3"
+                                data-field-key="svc.options.terms"
+                                placeholder="Передоплата, дедлайни, кількість правок тощо."
+                                maxlength="700"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-2">
+                      <label class="form-label small fw-semibold">Швидкий старт</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.options.quickStart"
+                                placeholder="Що потрібно від клієнта для швидкого старту."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+                    </div>
+
+
+
+                    <button id="service-page-save-btn" class="btn btn-sm btn-gradient mt-2" type="button" disabled>
+                      <i class="bi bi-save me-1"></i>Зберегти сторінку сервісу
+                    </button>
+                    <div id="service-page-save-hint" class="text-danger small mt-2" style="display:none;"></div>
+
+                    <!-- GALLERY -->
+                    <div class="admin-card p-3">
+                    <h6 class="text-uppercase small text-muted mb-2">Галерея</h6>
+                      <p class="text-muted small mb-3">
+                        Для кожного слайда: фото → заголовок → опис → кнопка збереження.
+                      </p>
+
+                      <!-- SLIDE 1 -->
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">
+                          Слайд 1 — фотографія
+                          <span class="admin-tooltip ms-1" tabindex="0" role="img" aria-label="Інформація">i
+                            <span class="admin-tooltip-text">
+                              Фотографія повинна бути до 2 МБ та з розширенням: image/jpeg, image/png, image/webp, image/gif
+                            </span>
+                          </span>
+                        </label>
+                        <input
+                                type="file"
+                                id="service-gallery-1-image-file"
+                                name="gallery_1"
+                                class="form-control form-control-sm"
+                                accept="image/*"
+                                data-upload-for="svc.gallery.1.image"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 1 — заголовок</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.gallery.1.title"
+                                placeholder="Наприклад: Інтернет-магазин з інтеграцією оплати"
+                                maxlength="80"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 1 — опис</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.gallery.1.caption"
+                                placeholder="Коротко, що зроблено в цьому проєкті."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+
+                      <button
+                              id="service-gallery-1-save-btn"
+                              type="button"
+                              class="btn btn-sm btn-gradient mb-3"
+                              data-gallery-save="1"
+                              disabled
+                      >
+                        <i class="bi bi-save me-1"></i>
+                        Зберегти дані
+                      </button>
+
+                      <div class="divider-line mb-3"></div>
+
+                      <!-- SLIDE 2 -->
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">
+                          Слайд 2 — фотографія
+                          <span class="admin-tooltip ms-1" tabindex="0" role="img" aria-label="Інформація">i
+                            <span class="admin-tooltip-text">
+                              Фотографія повинна бути до 2 МБ та з розширенням: image/jpeg, image/png, image/webp, image/gif
+                            </span>
+                          </span>
+                        </label>
+                        <input
+                                type="file"
+                                id="service-gallery-2-image-file"
+                                name="gallery_2"
+                                class="form-control form-control-sm"
+                                accept="image/*"
+                                data-upload-for="svc.gallery.2.image"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 2 — заголовок</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.gallery.2.title"
+                                placeholder="Другий приклад"
+                                maxlength="80"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 2 — опис</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.gallery.2.caption"
+                                placeholder="Що тут зроблено."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+
+                      <button
+                              id="service-gallery-2-save-btn"
+                              type="button"
+                              class="btn btn-sm btn-gradient mb-3"
+                              data-gallery-save="2"
+                              disabled
+                      >
+                        <i class="bi bi-save me-1"></i>
+                        Зберегти дані
+                      </button>
+
+                      <div class="divider-line mb-3"></div>
+
+                      <!-- SLIDE 3 -->
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">
+                          Слайд 3 — фотографія
+                          <span class="admin-tooltip ms-1" tabindex="0" role="img" aria-label="Інформація">i
+                            <span class="admin-tooltip-text">
+                              Фотографія повинна бути до 2 МБ та з розширенням: image/jpeg, image/png, image/webp, image/gif
+                            </span>
+                          </span>
+                        </label>
+                        <input
+                                type="file"
+                                id="service-gallery-3-image-file"
+                                name="gallery_3"
+                                class="form-control form-control-sm"
+                                accept="image/*"
+                                data-upload-for="svc.gallery.3.image"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 3 — заголовок</label>
+                        <input
+                                type="text"
+                                class="form-control form-control-sm admin-input"
+                                data-field-key="svc.gallery.3.title"
+                                placeholder="Третій приклад"
+                                maxlength="80"
+                        >
+                      </div>
+
+                      <div class="mb-2">
+                        <label class="form-label small fw-semibold">Слайд 3 — опис</label>
+                        <textarea
+                                class="form-control form-control-sm admin-input"
+                                rows="2"
+                                data-field-key="svc.gallery.3.caption"
+                                placeholder="Що тут зроблено."
+                                maxlength="240"
+                        ></textarea>
+                      </div>
+
+                      <button
+                              id="service-gallery-3-save-btn"
+                              type="button"
+                              class="btn btn-sm btn-gradient"
+                              data-gallery-save="3"
+                              disabled
+                      >
+                        <i class="bi bi-save me-1"></i>
+                        Зберегти дані
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- ПРАВА ЧАСТИНА: ПРЕВʼЮ -->
+                <div class="col-lg-6">
+                  <div class="admin-card p-3 h-100">
+                    <h6 class="text-uppercase small text-muted mb-2">Превʼю сторінки сервісу</h6>
+                    <p class="text-muted small mb-3">
+                      Клік по тексту/кнопці → підсвічує відповідне поле зліва (логіка така ж, як у розділі «Головна сторінка»).
+                    </p>
+
+                    <!-- HERO PREVIEW -->
+                    <div class="admin-preview-wrapper mb-3">
+                      <div class="admin-preview-header">
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="ms-2 small text-muted">Сервіс — Hero</span>
+                      </div>
+                      <div class="admin-preview-body">
+                        <div class="preview-hero">
+                          <div class="preview-hero-text">
+                    <span class="preview-badge editable-preview"
+                          data-field-key="svc.hero.badge"
+                          data-default-text="Послуга">Послуга</span>
+
+                            <div class="preview-title-text editable-preview"
+                                 data-field-key="svc.hero.title"
+                                 data-default-text="Заголовок сторінки сервісу">Заголовок сторінки сервісу</div>
+
+                            <div class="preview-subtitle-text editable-preview"
+                                 data-field-key="svc.hero.lead"
+                                 data-default-text="Короткий опис, чим саме є ця послуга.">Короткий опис, чим саме є ця послуга.</div>
+
+                            <div class="preview-cta-row">
+                              <button type="button" class="preview-cta-btn primary editable-preview"
+                                      data-field-key="svc.hero.textBtn1"
+                                      data-default-text="Подивитись етапи">
+                                <i class="bi bi-list-check"></i><span>Подивитись етапи</span>
+                              </button>
+                              <button type="button" class="preview-cta-btn secondary editable-preview"
+                                      data-field-key="svc.hero.textBtn2"
+                                      data-default-text="Подивитись приклади">
+                                <i class="bi bi-diagram-3"></i><span>Подивитись приклади</span>
+                              </button>
+                            </div>
+
+                            <div class="mt-2 small text-muted">
+                      <span class="me-3 editable-preview"
+                            data-field-key="svc.hero.duration"
+                            data-default-text="Тривалість: 1–3 тижні">Тривалість: 1–3 тижні</span>
+                              <span class="me-3 editable-preview"
+                                    data-field-key="svc.hero.priceHero"
+                                    data-default-text="Від $500">Від $500</span>
+                              <span class="editable-preview"
+                                    data-field-key="svc.hero.executor"
+                                    data-default-text="Виконавець: Ігор">Виконавець: Ігор</span>
+                            </div>
+                          </div>
+
+                          <div class="preview-hero-image editable-preview js-focus-image"
+                               data-field-key="svc.hero.image"
+                               data-preview-type="image"
+                               data-focus-input="service-hero-image-file"
+                               data-default-image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
+                               style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop');"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- OPTIONS PREVIEW -->
+                    <div class="admin-preview-wrapper mb-3">
+                      <div class="admin-preview-header">
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="ms-2 small text-muted">Сервіс — Умови та опції</span>
+                      </div>
+                      <div class="admin-preview-body">
+                        <div class="row g-3">
+                          <div class="col-12">
+                            <h6 class="mb-2">Що включено</h6>
+                            <div class="tag-list-badges editable-preview"
+                                 data-field-key="svc.options.include"
+                                 data-preview-type="list"
+                                 data-placeholder="Список включених опцій зʼявиться тут">
+                              <span class="badge">Налаштування API</span>
+                              <span class="badge">Тестування</span>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <h6 class="mb-2">Додатково</h6>
+                            <div class="tag-list-badges editable-preview"
+                                 data-field-key="svc.options.additional"
+                                 data-preview-type="list"
+                                 data-placeholder="Додаткові опції зʼявляться тут">
+                              <span class="badge">Підтримка після запуску</span>
+                            </div>
+                          </div>
+
+                          <div class="col-12">
+                            <div class="quote-line p-2 editable-preview"
+                                 data-field-key="svc.options.discount"
+                                 data-default-text="Знижка при замовленні кількох інтеграцій.">
+                              Знижка при замовленні кількох інтеграцій.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- PRICING CTA PREVIEW -->
+                    <div class="admin-preview-wrapper mb-3">
+                      <div class="admin-preview-header">
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="ms-2 small text-muted">Сервіс — Ціна та умови</span>
+                      </div>
+                      <div class="admin-preview-body">
+                        <div class="preview-pricing-card">
+                          <div class="card p-3">
+                            <h6 class="mb-1 editable-preview"
+                                data-field-key="svc.options.price_title"
+                                data-default-text="Пакет інтеграцій для вашого бізнесу">
+                              Пакет інтеграцій для вашого бізнесу
+                            </h6>
+
+                            <p class="text-muted small mb-1 editable-preview"
+                               data-field-key="svc.options.price_subtitle"
+                               data-default-text="Підбір, підключення, тестування та документування інтеграцій.">
+                              Підбір, підключення, тестування та документування інтеграцій.
+                            </p>
+
+                            <div class="fw-bold fs-5 mb-2 editable-preview"
+                                 data-field-key="svc.options.price"
+                                 data-default-text="Від $500">
+                              Від $500
+                            </div>
+
+                            <div class="editable-preview tag-list-badges mb-2"
+                                 data-field-key="svc.options.terms"
+                                 data-preview-type="list"
+                                 data-placeholder="Умови співпраці зʼявляться тут">
+                              <span class="badge d-block text-start">Передоплата 30%</span>
+                              <span class="badge d-block text-start">Чіткі дедлайни</span>
+                            </div>
+
+                            <div class="quote-line p-2 editable-preview"
+                                 data-field-key="svc.options.quickStart"
+                                 data-default-text="Для старту достатньо доступів до сервісів та короткого опису задачі.">
+                              Для старту достатньо доступів до сервісів та короткого опису задачі.
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- GALLERY PREVIEW -->
+                    <div class="admin-preview-wrapper">
+                      <div class="admin-preview-header">
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="admin-preview-dot"></span>
+                        <span class="ms-2 small text-muted">Сервіс — Галерея</span>
+                      </div>
+                      <div class="admin-preview-body">
+                        <div class="row g-2">
+                          <div class="col-4">
+                            <div class="card p-2 h-100">
+                              <div class="preview-hero-image mb-2 editable-preview"
+                                   data-field-key="svc.gallery.1.image"
+                                   data-preview-type="image"
+                                   data-default-image="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop"
+                                   style="background-image:url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=800&auto=format&fit=crop'); min-height:70px;"
+                              ></div>
+                              <div class="small fw-semibold editable-preview"
+                                   data-field-key="svc.gallery.1.title"
+                                   data-default-text="Проєкт 1">Проєкт 1</div>
+                              <div class="small text-muted editable-preview"
+                                   data-field-key="svc.gallery.1.caption"
+                                   data-default-text="Короткий опис проєкту.">Короткий опис проєкту.</div>
+                            </div>
+                          </div>
+
+                          <div class="col-4">
+                            <div class="card p-2 h-100">
+                              <div class="preview-hero-image mb-2 editable-preview"
+                                   data-field-key="svc.gallery.2.image"
+                                   data-preview-type="image"
+                                   data-default-image="https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=800&auto=format&fit=crop"
+                                   style="background-image:url('https://images.unsplash.com/photo-1521737852567-6949f3f9f2b5?q=80&w=800&auto=format&fit=crop'); min-height:70px;"
+                              ></div>
+                              <div class="small fw-semibold editable-preview"
+                                   data-field-key="svc.gallery.2.title"
+                                   data-default-text="Проєкт 2">Проєкт 2</div>
+                              <div class="small text-muted editable-preview"
+                                   data-field-key="svc.gallery.2.caption"
+                                   data-default-text="Короткий опис проєкту.">Короткий опис проєкту.</div>
+                            </div>
+                          </div>
+
+                          <div class="col-4">
+                            <div class="card p-2 h-100">
+                              <div class="preview-hero-image mb-2 editable-preview"
+                                   data-field-key="svc.gallery.3.image"
+                                   data-preview-type="image"
+                                   data-default-image="https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop"
+                                   style="background-image:url('https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop'); min-height:70px;"
+                              ></div>
+                              <div class="small fw-semibold editable-preview"
+                                   data-field-key="svc.gallery.3.title"
+                                   data-default-text="Проєкт 3">Проєкт 3</div>
+                              <div class="small text-muted editable-preview"
+                                   data-field-key="svc.gallery.3.caption"
+                                   data-default-text="Короткий опис проєкту.">Короткий опис проєкту.</div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="preview-footer mt-2">
+                          <span>Міні-галерея прикладів</span>
+                          <span>puffinity.dev/services/&lt;slug&gt;</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- ================= /СЕРВІСИ ================= -->
+        <!-- ================= ВІДГУКИ ================= -->
+        <div id="admin-testimonials" class="admin-section d-none">
+          <div class="admin-card p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <div>
+                <div class="admin-section-title mb-1">
+                  <i class="bi bi-chat-square-text"></i>
+                  <span>Відгуки</span>
+                </div>
+              </div>
+              <span class="badge text-bg-secondary-subtle">
+                <i class="bi bi-database me-1"></i>Mock data
+              </span>
+            </div>
+          </div>
+
+          <div class="row g-3" id="admin-testimonials-list"></div>
+
+          <template id="testimonial-card-template">
+            <div class="col-12 col-md-6" data-testimonial-card data-id="">
+              <div class="admin-card p-3 h-100">
+                <div class="d-flex justify-content-between align-items-start gap-2">
+                  <div class="pe-2">
+                    <div class="fw-semibold" data-testimonial-name>Імʼя</div>
+                    <div class="text-muted small" data-testimonial-role>Роль / компанія</div>
+                  </div>
+                  <span class="badge text-bg-success" data-testimonial-status>ON</span>
+                </div>
+
+                <div class="mt-2 small" data-testimonial-text>
+                  Текст відгуку...
+                </div>
+
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                  <button type="button" class="btn btn-sm btn-warning js-testimonial-off" data-id="">
+                    <i class="bi bi-eye-slash me-1"></i>Вимкнути
+                  </button>
+
+                  <button type="button" class="btn btn-sm btn-success js-testimonial-on" data-id="">
+                    <i class="bi bi-eye me-1"></i>Увімкнути
+                  </button>
+
+                  <button type="button" class="btn btn-sm btn-danger js-testimonial-delete" data-id="">
+                    <i class="bi bi-trash me-1"></i>Видалити
+                  </button>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <!-- ================= КОНТАКТИ ================= -->
+        <div id="admin-contacts" class="admin-section d-none">
+          <div class="admin-card p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <div>
+                <div class="admin-section-title mb-1">
+                  <i class="bi bi-person-lines-fill"></i>
+                  <span>Контакти</span>
+                </div>
+                <p class="text-muted mb-0">
+                  Ліворуч — дані, які йдуть у блок «Контакти» на сайті.
+                  Справа — міні-копія цього блоку.
+                </p>
+              </div>
+              <span class="badge text-bg-info-subtle">
+                <i class="bi bi-envelope-paper me-1"></i>Форма + посилання
+              </span>
+            </div>
+          </div>
+
+          <div class="row g-4">
+            <!-- LEFT FORM -->
+            <div class="col-md-6">
+              <div class="admin-card p-4 h-100">
+                <h6 class="text-uppercase small text-muted mb-2">Дані для блоку «Контакти»</h6>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">E-mail</label>
+                  <input
+                          type="email"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="contacts.email"
+                          placeholder="work@puffinity.dev"
+                          maxlength="120"
+                  >
+                  <div class="text-danger small mt-1" data-error-for="contacts.email" style="display:none;"></div>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label small fw-semibold">Telegram</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="contacts.telegram"
+                          placeholder="https://t.me/puffinity"
+                          maxlength="200"
+                  >
+                  <div class="text-danger small mt-1" data-error-for="contacts.telegram" style="display:none;"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Лейбл Telegram</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="contacts.telegramLabel"
+                          placeholder="@puffinity"
+                          maxlength="60"
+                  >
+                  <div class="text-danger small mt-1" data-error-for="contacts.telegramLabel" style="display:none;"></div>
+                </div>
+
+                <div class="mb-3">
+                <label class="form-label small fw-semibold">GitHub</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="contacts.github"
+                          placeholder="https://github.com/puffinity"
+                          maxlength="200"
+                  >
+                  <div class="text-danger small mt-1" data-error-for="contacts.github" style="display:none;"></div>
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label small fw-semibold">Лейбл GitHub</label>
+                  <input
+                          type="text"
+                          class="form-control form-control-sm admin-input"
+                          data-field-key="contacts.githubLabel"
+                          placeholder="github.com/puffinity"
+                          maxlength="80"
+                  >
+                  <div class="text-danger small mt-1" data-error-for="contacts.githubLabel" style="display:none;"></div>
+                </div>
+
+                <button
+                        id="contacts-save-btn"
+                        class="btn btn-sm btn-gradient mt-2"
+                        type="button"
+                        disabled
+                >
+                  <i class="bi bi-save me-1"></i>Зберегти контакти
+                </button>
+
+                <div
+                        id="contacts-save-hint"
+                        class="text-danger small mt-2"
+                        style="display:none;"
+                ></div>
+              </div>
+            </div>
+
+            <!-- RIGHT PREVIEW -->
+            <div class="col-md-6">
+              <div class="admin-card p-4 h-100">
+                <h6 class="text-uppercase small text-muted mb-2">Міні-копія блоку «Контакти»</h6>
+
+                <div class="card-glass p-3">
+                  <h5 class="mb-3">Контакти</h5>
+                  <p class="mb-1">
+                    <strong>E-mail:</strong>
+                    <span
+                            class="editable-preview"
+                            data-field-key="contacts.email"
+                            data-default-text="work@puffinity.dev"
+                    >
+                      work@puffinity.dev
+                    </span>
+                  </p>
+                  <p class="mb-1">
+                    <strong>Telegram:</strong>
+                    <span
+                            class="editable-preview"
+                            data-field-key="contacts.telegramLabel"
+                            data-default-text="@puffinity"
+                    >
+                      @puffinity
+                    </span>
+                  </p>
+                  <p class="mb-1">
+                    <strong>GitHub:</strong>
+                    <span
+                            class="editable-preview"
+                            data-field-key="contacts.githubLabel"
+                            data-default-text="github.com/puffinity"
+                    >
+                      github.com/puffinity
+                    </span>
+                  </p>
+                  <div class="ratio ratio-16x9 rounded-3 overflow-hidden mt-3">
+                    <img
+                            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop"
+                            alt="Локація"
+                            style="object-fit:cover;"
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= FAQ ================= -->
+        <div id="admin-faq" class="admin-section d-none">
+          <div class="admin-card p-4 mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+              <div>
+                <div class="admin-section-title mb-1">
+                  <i class="bi bi-question-circle"></i>
+                  <span>FAQ</span>
+                </div>
+                <p class="text-muted mb-1">
+                  Налаштування питаннь та відповідів.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="admin-card p-4">
+            <div class="mb-4 d-flex flex-column flex-lg-row gap-3 align-items-lg-center justify-content-between">
+              <div class="flex-grow-1">
+                <label for="faq-context-select" class="form-label small fw-semibold">
+                  Вибрати, для якої сторінки показати FAQ
+                </label>
+                <select id="faq-context-select" class="form-select form-select-sm">
+                  <option value="" selected>— Не вибрано —</option>
+                </select>
+              </div>
+
+              <div class="text-lg-end">
+                <button id="faq-add-btn" type="button" class="btn btn-sm btn-gradient">
+                  <i class="bi bi-plus-circle me-1"></i>Створити новий FAQ
+                </button>
+              </div>
+            </div>
+
+            <div id="faq-alert" class="alert alert-warning d-none" role="alert">
+              <div class="d-flex align-items-start justify-content-between gap-2">
+                <div id="faq-alert-text">Увага: перевірте дані.</div>
+                <button type="button" class="btn-close" aria-label="Закрити"></button>
+              </div>
+            </div>
+
+            <div id="admin-faq-list" class="row g-3"></div>
+
+            <div id="faq-form-card" class="admin-card p-3 mt-4 d-none">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 id="faq-form-title" class="mb-0">
+                  Створити новий FAQ
+                </h6>
+                <button id="faq-cancel-btn" type="button" class="btn btn-sm btn-outline-secondary">
+                  Скасувати
+                </button>
+              </div>
+              <p class="text-muted small mb-3">
+                Змінити одне FAQ — питання та відповідь.
+              </p>
+
+              <input type="hidden" id="faq-id-input" />
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Питання</label>
+                <textarea
+                        id="faq-question-input"
+                        class="form-control form-control-sm"
+                        rows="2"
+                        placeholder="Наприклад: Скільки часу займає інтеграція?"
+                ></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Відповідь</label>
+                <textarea
+                        id="faq-answer-input"
+                        class="form-control form-control-sm"
+                        rows="3"
+                        placeholder="Наприклад: Зазвичай 1–3 тижні залежно від складності."
+                ></textarea>
+              </div>
+
+              <div class="form-check form-switch mb-3">
+                <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="faq-enabled-input"
+                        checked
+                />
+                <label class="form-check-label small" for="faq-enabled-input">
+                  Показувати FAQ на сайті
+                </label>
+              </div>
+
+              <button id="faq-save-btn" type="button" class="btn btn-sm btn-gradient">
+                <i class="bi bi-save me-1"></i>Зберегти FAQ
+              </button>
+
+            </div>
+            <!-- ================= CREATE FAQ WINDOW (SEPARATE) ================= -->
+            <div id="faq-create-card" class="admin-card p-3 mt-4 d-none">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="mb-0">Створити новий FAQ</h6>
+
+                <button id="faq-create-cancel-btn" type="button" class="btn btn-sm btn-outline-secondary">
+                  Скасувати
+                </button>
+              </div>
+
+              <p class="text-muted small mb-3">
+                Це окреме вікно тільки для створення нового FAQ.
+              </p>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Питання</label>
+                <textarea
+                        id="faq-create-question-input"
+                        class="form-control form-control-sm"
+                        rows="2"
+                        placeholder="Наприклад: Скільки часу займає інтеграція?"
+                ></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Відповідь</label>
+                <textarea
+                        id="faq-create-answer-input"
+                        class="form-control form-control-sm"
+                        rows="3"
+                        placeholder="Наприклад: Зазвичай 1–3 тижні залежно від складності."
+                ></textarea>
+              </div>
+
+              <div class="form-check form-switch mb-3">
+                <input class="form-check-input" type="checkbox" id="faq-create-enabled-input" checked />
+                <label class="form-check-label small" for="faq-create-enabled-input">
+                  Показувати FAQ на сайті
+                </label>
+              </div>
+
+              <button id="faq-create-save-btn" type="button" class="btn btn-sm btn-gradient" disabled>
+                <i class="bi bi-save me-1"></i>Зберегти новий FAQ
+              </button>
+
+              <div id="faq-create-hint" class="text-danger small mt-2" style="display:none;"></div>
+            </div>
+            <!-- ================= /CREATE FAQ WINDOW ================= -->
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<div id="faq-confirm" class="admin-confirm d-none" role="dialog" aria-modal="true" aria-labelledby="faq-confirm-title">
+  <div class="admin-confirm-card">
+    <div class="admin-confirm-header">
+      <div class="admin-confirm-icon">?</div>
+      <div>
+        <div id="faq-confirm-title" class="admin-confirm-title">Підтвердження</div>
+        <div id="faq-confirm-text" class="admin-confirm-text">Ви впевнені, що хочете виконати цю дію?</div>
+      </div>
+    </div>
+    <div class="admin-confirm-actions">
+      <button type="button" class="btn btn-sm btn-outline-secondary" data-confirm-cancel>Скасувати</button>
+      <button type="button" class="btn btn-sm btn-gradient" data-confirm-ok>Підтвердити</button>
+    </div>
+  </div>
+</div>
+
+<div id="admin-error-modal" class="admin-error-modal d-none" role="alert" aria-live="assertive">
+  <div class="admin-error-card">
+    <div class="admin-error-title">Вибачаємось за неполадки, виникла помилка.</div>
+    <div class="admin-error-text">
+      Якщо ви бачите це повідомлення, будь ласка, якнайшвидше повідомте IT‑адміністратора.
+    </div>
+    <button type="button" class="btn btn-sm btn-gradient mt-3" data-error-close>Закрити</button>
+  </div>
+</div>
+
+<div id="admin-toast-container" class="admin-toast-container" aria-live="polite" aria-atomic="true"></div>
+
+<!-- FOOTER -->
+<footer class="admin-footer py-3">
+  <div class="container d-flex flex-column flex-lg-row align-items-center justify-content-between">
+    <div class="small">© <span id="year"></span> Puffinity. Адмін панель.</div>
+    <div class="small text-muted">
+      Керування контентом сайту
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<a href="#top" class="btn btn-gradient rounded-circle p-3 back-to-top" aria-label="Вгору">
+  <i class="bi bi-arrow-up"></i>
+</a>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Логіка адмін-панелі -->
+<script src="../../js/adminPanel.js?v=20260211" defer></script>
+<script>
+  (function initBackToTopVisibility() {
+    const btns = document.querySelectorAll('.back-to-top');
+    if (!btns.length) return;
+
+    const update = () => {
+      const doc = document.documentElement;
+      const scrollTop = window.pageYOffset || doc.scrollTop || 0;
+      const maxScroll = Math.max(doc.scrollHeight - window.innerHeight, 0);
+      const halfway = maxScroll * 0.5;
+      const show = scrollTop >= halfway;
+      btns.forEach(btn => btn.classList.toggle('is-visible', show));
+    };
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        update();
+        ticking = false;
+      });
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+  })();
+</script>
+
+</body>
+</html>

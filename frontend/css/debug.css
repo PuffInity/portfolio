@@ -1,0 +1,33 @@
+/* Специфічні стилі для сторінки "Дебаг та оптимізація".
+ * Базові речі (root, body, .hero, .btn-gradient, .glass, .card-glass,
+ * .section-title, .text-muted-2, .portfolio-img, footer, і т.п.) вже в styles.css
+ */
+
+.step {
+    position: relative;
+    padding-left: 54px;
+}
+
+.step .num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #e0f2fe, #eef2ff);
+    border: 1px solid rgba(2, 6, 23, .08);
+    font-weight: 700;
+}
+
+/* Іконки "галочки" у списках */
+.list-check i {
+    color: #16a34a;
+}
+
+/* Приховування блоків, які показуємо через JS */
+.hidden {
+    display: none !important;
+}
