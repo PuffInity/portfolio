@@ -48,7 +48,6 @@ export async function saveImageForAboutMe (path?: string) {
 export async function saveImageForService(data: GalleryService, path?: string) {
     const client = await pool.connect()
     try {
-        console.log(data)
         await executeVoid(`UPDATE service_gallery 
                                 SET image = COALESCE($1, image),
                                     title = COALESCE($2, title),
@@ -61,7 +60,6 @@ export async function saveImageForService(data: GalleryService, path?: string) {
                                     data.galleryId
 
         ],client)
-        console.log()
     }catch (error) {
         if (isTableNotFound(error)) helperLogger.error('Таблиці about_me не існує')
         if (isColumnNotFound(error)) helperLogger.error('Одної або більше колонок не існує в таблиці about_me')

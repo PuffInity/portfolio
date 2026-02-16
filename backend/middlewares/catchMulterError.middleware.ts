@@ -1,5 +1,8 @@
 import multer from "multer";
 import { Request, Response, NextFunction } from "express";
+import {createAppLogger} from "../utils/logger/logger.js";
+
+const uploadLogger = createAppLogger({service: 'multer-upload'});
 
 export const catchMulterError = (
     err: unknown,
@@ -16,7 +19,7 @@ export const catchMulterError = (
                 error: "Файл занадто великий"
             });
         }
-        console.log('помилка 400')
+        uploadLogger.warn('Multer повернув помилку валідації файлу', {code: err.code, message: err.message})
         return res.status(400).json({
             error: err.message
         });
@@ -24,12 +27,14 @@ export const catchMulterError = (
 
     // Помилка неправильного формату (твій fileFilter)
     if (err instanceof Error) {
+        uploadLogger.warn('Невалідний файл для upload', {message: err.message})
         return res.status(400).json({
             error: err.message
         });
     }
 
     // Все інше
+    uploadLogger.error('Невідома помилка під час upload')
     return res.status(500).json({
         error: "Unknown upload error"
     });

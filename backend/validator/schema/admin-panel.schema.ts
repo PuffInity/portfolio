@@ -181,11 +181,11 @@ export const contactPageSchema = z.object({
         /** email - Рядок, додаткова перевірка: має містити '@'. Може бути відсутній */
         email: z.string().refine((value) => value.includes("@")).optional(),
         /** telegram - Рядок, мін 3, макс 15. Може бути відсутній */
-        telegram: z.string().min(3).max(15).optional(),
+        telegram: z.string().min(3).optional(),
         /** telegramLabel - Рядок, мін 3. Може бути відсутній */
         telegramLabel: z.string().min(3).optional(),
         /** github - Рядок, мін 3, макс 15. Може бути відсутній */
-        github: z.string().min(3).max(15).optional(),
+        github: z.string().min(3).optional(),
         /** githubLabel - Рядок, мін 3. Може бути відсутній */
         githubLabel: z.string().min(3).optional(),
     }),

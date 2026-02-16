@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {registryHttp, returnHttpMetrics} from "../../metrics/http.metric.js";
-import {registryInitApp, returnInitMetrics} from "../../metrics/init.metric.js";
+import {registryHttp} from "../../metrics/http.metric.js";
+import {registryInitApp} from "../../metrics/init.metric.js";
 import client from "prom-client";
 
 /**

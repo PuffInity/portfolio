@@ -1,5 +1,5 @@
 import {pool} from "../config/database.config.js";
-import {PoolClient, QueryResult, QueryResultRow} from "pg";
+import {PoolClient, QueryResultRow} from "pg";
 import {createAppLogger} from "../utils/logger/logger.js";
 
 export const helperLogger = createAppLogger({service: 'Helper-DB'})

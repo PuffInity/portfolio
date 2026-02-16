@@ -3,6 +3,7 @@ import {Request,Response} from "express";
 import {ifExistAdmin, auditAdmin} from "../../helpers/db/admin.db.js";
 import {blockedUser,isBlockedUser} from "../../helpers/redis/admin.redis.js";
 import {createAdminSession,deleteAdminSession} from "../../helpers/session/session.helper.js";
+import {createAppLogger} from "../../utils/logger/logger.js";
 
 /**
  * @file admin.handler.ts
@@ -13,6 +14,8 @@ interface admin {
     login: string,
     password: string,
 }
+
+const adminAuthLogger = createAppLogger({service: 'admin-auth'});
 
 //==========================================================================================
 
@@ -38,7 +41,7 @@ export const logToAdmin = async (req: Request<{}, {}, admin>, res: Response) => 
      * Провірка чи користувач заблокований, якщо так зупинити вхід
      */
     if(await isBlockedUser(login)) {
-         res.status(404).json({message: 'Можливість війти заблокована, спробуйте через 1 годину'})
+         res.status(403).json({message: 'Можливість війти заблокована, спробуйте через 1 годину'})
          return
     }
     /**
@@ -74,11 +77,11 @@ export const logToAdmin = async (req: Request<{}, {}, admin>, res: Response) => 
 export const logOutAdmin = async (req: Request, res: Response) => {
     if(!req.session) {
         res.status(401).json({message: 'Не можна використати функцію вихода якщо не було створеної сесії'})
-        console.log(req.session, 'Провірка на виіхд з сесії якщо сесії не існує то це тут')
+        adminAuthLogger.warn('Спроба logout без сесії')
         return;
     }
 
-    console.log('Тут я намагаюсь її видалити ')
+    adminAuthLogger.info('Спроба logout адміністратора', {nickname: req.session.nickname ?? 'unknown'})
     await deleteAdminSession(req,res,req.session.nickname)
     res.status(201).json({message: 'Вихід з адмін-панелі пройшов успішно'})
     return
@@ -93,7 +96,7 @@ export const checkSession = async (req: Request, res: Response) => {
     if(req.session?.userId) {
        return res.status(403).json({message: 'Адміністратор не може входити 2 рази'})
     }
-    console.log('Сессія не існує можна створити')
+    adminAuthLogger.info('Перевірка сесії: активна сесія не знайдена')
     return  res.status(200).json({message: 'Адміністратор ще не війшов, можна створити ще одну сесію'})
 }
 
@@ -104,9 +107,9 @@ export const checkSession = async (req: Request, res: Response) => {
  */
 export const checkSessionForNginx = async (req: Request, res: Response) => {
     if(req.session?.userId) {
-        console.log('Сессія існує nginx')
+        adminAuthLogger.info('Nginx check-session: сесія існує')
         return res.status(200).json({message: 'Сессія існує, доступ наданий'})
     }
-    console.log('Сесія не існує nginx')
+    adminAuthLogger.info('Nginx check-session: сесія відсутня')
     return  res.status(403).json({message: 'Сессія не існує, доступ не наданий'})
 }

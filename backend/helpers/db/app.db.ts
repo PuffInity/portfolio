@@ -8,7 +8,6 @@ import {ServicesEntity} from '../../types/services.type.js'
 import {MainPageEntity} from '../../types/mainPage.type.js'
 import {PricingPlansEntity} from "../../types/pricingPlans.type.js";
 import {TestimonialsEntity} from "../../types/testimonials.type.js";
-import {ServiceFaqEntity} from "../../types/serviceFaq.type.js";
 import {ContactEntity} from "../../types/contact.type.js";
 import {AboutMeEntity} from "../../types/aboutMe.type.js";
 
@@ -16,7 +15,6 @@ import {mainPageRowToEntity} from '../../utils/mappers/mainPage.mapp.js'
 import {servicesRowToEntity} from '../../utils/mappers/services.mapp.js'
 import {pricingPlansRowToEntity} from "../../utils/mappers/pricingPlans.mapp.js";
 import {testimonialsRowToEntity} from "../../utils/mappers/testimonials.mapp.js";
-import {serviceFaqRowToEntity} from '../../utils/mappers/faqService.mapp.js'
 import {contactRowToEntity} from "../../utils/mappers/contact.mapp.js";
 import {aboutMeRowToEntity} from "../../utils/mappers/aboutMe.mapp.js";
 import {toInsertTestimonials} from "../../utils/mappers/testimonials.mapp.js";
@@ -45,7 +43,6 @@ export const getMainPageFromDb =  async (client: PoolClient):Promise<MainPageCon
         let aboutMeResult: AboutMeEntity | null = null;
         let testimonialsResult: TestimonialsEntity[] | null = null;
         let avatarTestimonialsResult: AvatarTestimonialsEntity[] | null = null;
-        let faqResult: ServiceFaqEntity[] | null = null;
         let contactResult: ContactEntity[] = [];
 
         /**
@@ -106,14 +103,6 @@ export const getMainPageFromDb =  async (client: PoolClient):Promise<MainPageCon
             if (isColumnNotFound(error)) helperLogger.error('Одної або більше колонок не існує в таблиці avatar_testimonials')
         }
 
-        try {
-
-             faqResult = await queryMany(`SELECT * FROM service_faq WHERE service_id IS NULL`, [], serviceFaqRowToEntity, client)
-
-        }catch(error) {
-            if (isTableNotFound(error))  helperLogger.error('Таблиці service_faq не існує')
-            if (isColumnNotFound(error)) helperLogger.error('Одної або більше колонок не існує в таблиці service_faq')
-        }
         try{
 
              contactResult = await queryMany(`SELECT * FROM contacts`, [], contactRowToEntity, client)
@@ -128,7 +117,7 @@ export const getMainPageFromDb =  async (client: PoolClient):Promise<MainPageCon
         /**
          * Збираємо всі дані в змінні та повертаємо одним готовим блоком
          */
-        if(!heroResult || !aboutMeResult) throw new Error;
+        if(!heroResult || !aboutMeResult || !contactResult.length) throw new Error;
 
         const hero: MainPageContent["hero"] = {
             title: heroResult.title,
@@ -191,12 +180,6 @@ export const getMainPageFromDb =  async (client: PoolClient):Promise<MainPageCon
             url: avatar.url
         }))
 
-        const faq: MainPageContent['faq'] = (faqResult ?? []).map(faq => ({
-            enabled: faq.enabled,
-            question: faq.question,
-            answer: faq.answer,
-        }))
-
         const contacts: MainPageContent['contacts'] = {
             email: contactResult[0].email,
             telegram: contactResult[0].telegram,
@@ -213,7 +196,6 @@ export const getMainPageFromDb =  async (client: PoolClient):Promise<MainPageCon
             about,
             testimonials,
             avatarTestimonials,
-            faq,
             contacts
         }
 }

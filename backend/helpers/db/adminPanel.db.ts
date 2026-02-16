@@ -201,7 +201,6 @@ export async function updateMainCategory(data: MainTypeAdmin): Promise<void> {
             if (isColumnNotFound(error)) helperLogger.error('Одної або більше колонок не існує в таблиці main_page')
             throw error
         }
-        console.log('Пройшло успішно')
         return;
     })
 }
@@ -745,7 +744,6 @@ export async function createFaq(data: ServiceFaqInsert): Promise<void> {
 export async function getServiceGallery() {
     const client = await pool.connect()
     try {
-        console.log('Я тут працюю в getService')
         return await queryMany(`SELECT * FROM service_gallery`,[],serviceGalleryRowToEntity,client)
     }catch(error) {
         if (isTableNotFound(error)) helperLogger.error('Таблиці service_gallery не існує')

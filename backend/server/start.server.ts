@@ -2,7 +2,6 @@ import {Server} from "http";
 import {ILogger} from "../utils/logger/interface.logger.js";
 import {ConfigInterface} from "../config/server/server.config.js";
 import {Shutdown} from "./shutdown.server.js";
-import dotenv from 'dotenv'
 
 /**
  * @summary Класс який відповідає за вимакання сервера

@@ -11,7 +11,6 @@ import {RedisStore} from "connect-redis";
 
 import {createAppLogger} from "../utils/logger/logger.js";
 import {sessionClient} from "../server/life-cycle/life-cycle.redis.js";
-import {redisInit} from "../server/life-cycle/life-cycle.redis.js";
 
 /**
  * @file security.config.ts
@@ -161,7 +160,6 @@ export function applySecurity(app: Application): void {
      * sameSite - Захист вд CSFR атак
      */
 
-    console.log(sessionClient,'session')
     app.use(session({
         store: new RedisStore({
             client: sessionClient,

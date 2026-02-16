@@ -22,7 +22,7 @@ export interface ConfigInterface {
  * @example - const port = configPort(logger)
  */
 export function configPort (logger: ILogger) {
-    const portENV = process.env.port || '3000'
+    const portENV = process.env.PORT || '3000'
     /** includes Перевіряє чи example вмістить в собі параметер - example.includes(Чи ти містиш в собі цей текст?) */
     const isNamedPort = isNaN(Number(portENV)) || portENV.includes('/') || portENV.includes('\\')
 
@@ -59,6 +59,6 @@ export function createConfig (logger: ILogger): ConfigInterface {
         port: port.port,
         portType: port.portType,
         host: process.env.HOST || '0.0.0.0',
-        environment: process.env.NOD_ENV || 'development',
+        environment: process.env.NODE_ENV || 'development',
     }
 }

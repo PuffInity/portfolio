@@ -61,7 +61,7 @@ async function main() {
     }catch (error) {
         const message = error instanceof Error ? error.message : String(error)
         migrationLogger.error('Виникла помилка при запуску міграцій', { message })
-        throw Error
+        throw error
     }
 }
 

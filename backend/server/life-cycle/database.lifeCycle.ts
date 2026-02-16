@@ -48,7 +48,7 @@ export async function initDb(): Promise<void> {
  */
 export async function shutDownDb(): Promise<void> {
     /** Провірка чи postgresql працює чи вимкнута */
-    if (poolClosed) {
+    if (!poolClosed) {
         dbLogger.info('Postgresql pool закритий');
         return
     }

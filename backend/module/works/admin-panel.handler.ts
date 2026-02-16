@@ -138,7 +138,6 @@ export const sendFaq = async (req: Request<{},{},{name: string}>, res: Response)
  */
 export const newFaq = async (req: Request<{},{},ServiceFaqInsert>, res: Response) => {
     const body = req.body
-    console.log(body)
     await createFaq(body)
     res.status(200).json({message: 'ok'})
 }
@@ -183,7 +182,6 @@ export const onFaq = async (req: Request<{},{},{id: number}>, res: Response) => 
  */
 export const offFaq = async (req: Request<{},{},{id: number}>, res: Response) => {
     const body = req.body
-    console.log(body)
     await turnOffFaq(body.id)
     res.status(200).json({message: 'ok'})
 }
@@ -191,7 +189,6 @@ export const offFaq = async (req: Request<{},{},{id: number}>, res: Response) =>
 //==========================================================================================
 
 export const sendGallery = async (req: Request, res: Response) => {
-    console.log('Я тут починаю в sendGallery')
     const gallery = await getServiceGallery()
     return res.status(200).json(gallery)
 }

@@ -19,8 +19,12 @@ export class Migration012CreateAvatarTestimonials extends BaseMigration {
             
             CREATE TABLE avatar_testimonials (
             id SERIAL PRIMARY KEY,
+            
             name TEXT NOT NULL,
-            url TEXT NOT NULL
+            url TEXT NOT NULL,
+            
+            created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+            updated_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
 
             `)
