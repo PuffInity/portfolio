@@ -135,9 +135,24 @@ cd PortfolioProject
 
 ## 9. Налаштування `.env`
 
-У backend використовуються щонайменше такі змінні:
+У проєкті повинно бути 3 env-файли:
+- `backend/.env.postgres`
+- `backend/.env.docker`
+- `backend/.env.local`
 
-### PostgreSQL
+> Нижче вказані тільки назви полів (без значень).
+
+### `backend/.env.postgres`
+- `POSTGRES_DB`
+- `POSTGRES_USER`
+- `POSTGRES_PASSWORD`
+
+### `backend/.env.docker`
+- `NODE_ENV`
+- `PORT`
+- `HOST`
+- `CORS_ORIGINS`
+- `SESSION_SECRET`
 - `PG_HOST`
 - `PG_PORT`
 - `PG_DATABASE`
@@ -150,8 +165,9 @@ cd PortfolioProject
 - `PG_IDLE_TIMEOUT_MS`
 - `PG_STATEMENT_TIMEOUT_MS`
 - `PG_QUERY_TIMEOUT_MS`
-
-### Redis
+- `APP_NAME`
+- `LOG_LEVEL`
+- `REDIS_PASSWORD`
 - `REDIS_SESSION_HOST`
 - `REDIS_SESSION_PORT`
 - `REDIS_SESSION_DB`
@@ -163,12 +179,10 @@ cd PortfolioProject
 - `REDIS_CACHE_TTL`
 - `REDIS_CACHE_MAX_SIZE`
 - `REDIS_CACHE_COMPRESS`
-- `REDIS_PASSWORD`
-
-### SMTP / Mail
 - `SMTP_HOST`
 - `SMTP_PORT`
 - `SMTP_SECURE`
+- `RATE_LIMIT`
 - `SMTP_USER`
 - `SMTP_PASSWORD`
 - `SMTP_POOL`
@@ -180,14 +194,53 @@ cd PortfolioProject
 - `SMTP_SOCKET_TIMEOUT_MS`
 - `SMTP_TLS_REJECT_UNAUTHORIZED`
 - `MAIL_FROM`
-- `RATE_LIMIT`
 
-### Security / App
-- `SESSION_SECRET`
-- `CORS_ORIGINS`
+### `backend/.env.local`
 - `NODE_ENV`
 - `PORT`
-- `DOCKER`
+- `HOST`
+- `CORS_ORIGINS`
+- `PG_HOST`
+- `PG_PORT`
+- `PG_DATABASE`
+- `PG_USER`
+- `PG_PASSWORD`
+- `PG_SSL`
+- `PG_POOL_MAX`
+- `PG_POOL_MIN`
+- `PG_CONN_TIMEOUT_MS`
+- `PG_IDLE_TIMEOUT_MS`
+- `PG_STATEMENT_TIMEOUT_MS`
+- `PG_QUERY_TIMEOUT_MS`
+- `APP_NAME`
+- `LOG_LEVEL`
+- `REDIS_PASSWORD`
+- `REDIS_SESSION_HOST`
+- `REDIS_SESSION_PORT`
+- `REDIS_SESSION_DB`
+- `REDIS_SESSION_TTL`
+- `REDIS_SESSION_TOUCH`
+- `REDIS_CACHE_HOST`
+- `REDIS_CACHE_PORT`
+- `REDIS_CACHE_DB`
+- `REDIS_CACHE_TTL`
+- `REDIS_CACHE_MAX_SIZE`
+- `REDIS_CACHE_COMPRESS`
+- `SMTP_HOST`
+- `SMTP_PORT`
+- `SMTP_SECURE`
+- `RATE_LIMIT`
+- `SMTP_USER`
+- `SMTP_PASSWORD`
+- `SMTP_POOL`
+- `SMTP_POOL_MAX_CONNECTIONS`
+- `SMTP_POOL_MAX_MESSAGES`
+- `SMTP_KEEP_ALIVE`
+- `SMTP_CONNECTION_TIMEOUT_MS`
+- `SMTP_GREETING_TIMEOUT_MS`
+- `SMTP_SOCKET_TIMEOUT_MS`
+- `SMTP_TLS_REJECT_UNAUTHORIZED`
+- `MAIL_FROM`
 
 ## 10. Запуск (рекомендовано: Docker)
 
